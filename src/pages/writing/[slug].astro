@@ -63,8 +63,8 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
 
 <style>
   .essay {
-    /* One column width for header, body and footer: DESIGN.md's 680px measure ≈ 65 characters at 20px. */
-    --col: var(--measure);
+    /* One column width for header, body and footer: 600px ≈ 65 characters a line at 20px Geist (measured). */
+    --col: 600px;
     display: grid;
     gap: 56px;
     padding-block: 48px 0;
@@ -85,7 +85,8 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
     text-decoration: none;
   }
   .crumbs a::before {
-    content: '← ';
+    content: '←';
+    margin-right: 0.5em;
   }
   .crumbs a:hover {
     color: var(--text);
@@ -134,6 +135,9 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
     font-size: 16px;
     line-height: 1.7;
     color: var(--muted);
+  }
+  .longform :global(blockquote p) {
+    white-space: pre-line; /* keep the model's line breaks (Markdown joins soft breaks) */
   }
   .longform :global(table) {
     width: 100%;
