@@ -1,10 +1,22 @@
-// Case-study copy is written from each project's SPEC.md (~/Developer/micrograd-3d, ~/Developer/eden-film).
-// Keep it factual: no claims that the specs, commits or renders don't back up.
+// The site's list of works. Home and Work render whatever is here, in this order;
+// the first entry is the featured (full-width) card on Home.
+// Case-study copy comes from each project's own material: SPEC.md for micrograd 3D (~/Developer/micrograd-3d)
+// and Eden (~/Developer/eden-film); the piece itself for Almost Ripe (vault 02 Projects/作品集/04 Almost Ripe/).
+// Keep it factual: no claims that the specs, commits, renders or the piece don't back up.
+//
+// To add a work (e.g. "Attention in space" once it has material in the vault):
+//   1. copy its stills into src/assets/ (16:9 or wider reads best; 1920 px wide if available);
+//   2. import them below and add one entry to `works` with id, title, tagline, year, form, tools,
+//      status, live, cover (+ optional extra) and What / How / Next sections;
+//   3. `npm test`: check-site fails on a missing alt text or a broken link.
+// No placeholder entries: a work appears only when it has real images and facts.
 import type { ImageMetadata } from 'astro';
 import micrograd from '../assets/micrograd-3d.png';
 import microgradNetwork from '../assets/micrograd-3d-network.png';
 import edenTree from '../assets/eden-tree.png';
 import edenAerial from '../assets/eden-aerial.png';
+import almostRipeTower from '../assets/almost-ripe-tower.png';
+import almostRipeCorridor from '../assets/almost-ripe-corridor.png';
 
 export interface Work {
   id: string;
@@ -21,6 +33,44 @@ export interface Work {
 }
 
 export const works: Work[] = [
+  {
+    id: 'almost-ripe',
+    title: 'Almost Ripe',
+    tagline: 'A night inside the Caretaker.',
+    year: '2026',
+    form: 'Interactive story, about three minutes',
+    tools: 'three.js · Web Audio API · Claude',
+    status: 'Finished, private for now',
+    live: false,
+    cover: {
+      src: almostRipeTower,
+      alt: 'A dark monolithic tower under a moonlit, cloudy sky, a thin beam of light sweeping from its top. Two choices float above a small figure: “look away” and “keep walking”.',
+      caption: 'The tower, and the choice: look away, or keep walking.',
+    },
+    extra: {
+      src: almostRipeCorridor,
+      alt: 'A long dark corridor between walls of tiny blinking blue and amber lights, the tower glowing at its far end.',
+      caption: 'The corridor.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'An original story you walk through in the browser, with headphones, in about three minutes. Five people are left. Something keeps them: every night it rebuilds the world from what they remember, almost perfectly.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'Built with Claude, three.js and the Web Audio API. Every surface, light and sound in the piece is generated in code. You walk with the keyboard or by holding a finger down, and look by dragging. At one point the piece asks you to choose: look away, or keep walking.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: ['Finished after two polish rounds on the tree, the grass and the shatter. Private for now.'],
+      },
+    ],
+  },
   {
     id: 'micrograd-3d',
     title: 'micrograd 3D',
@@ -69,12 +119,12 @@ export const works: Work[] = [
     year: '2026',
     form: 'Short film, 16 seconds',
     tools: 'Blender · Python · EEVEE',
-    status: 'Final 1080p render in progress',
+    status: 'Best-version preview, then the final 1080p render',
     live: true,
     cover: {
       src: edenTree,
-      alt: 'A lone apple tree with red apples on a hillside of tall golden grass, backlit by a low sun in a warm hazy sky.',
-      caption: 'Shot 7: the apple tree at golden hour. Approved still, 1920 × 1080.',
+      alt: 'A lone apple tree on the crest of a hill of golden grass, a low sun to its right in a pale, cloudy evening sky.',
+      caption: 'Shot 7: the apple tree on the crest at golden hour. Preview still, 1920 × 1080.',
     },
     extra: {
       src: edenAerial,
@@ -97,7 +147,7 @@ export const works: Work[] = [
       {
         heading: 'Next',
         body: [
-          'Up close, the houses and the campus still read as CG; the last shot leans on haze, canopy and light. The final render is running now.',
+          'Up close, the houses and the campus still read as CG; the last shot leans on haze, canopy and light. A best-version pass is in review; the final 1080p render follows.',
         ],
       },
     ],

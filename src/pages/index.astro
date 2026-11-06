@@ -18,15 +18,19 @@ import { works } from '../data/works';
     <h2 id="work-heading" class="label">Work</h2>
     <ul>
       {
-        works.map((w) => (
-          <li>
+        works.map((w, i) => (
+          <li class:list={[{ featured: i === 0 }]}>
             <a class="card" href={`/work#${w.id}`}>
               <Picture
                 src={w.cover.src}
                 alt={w.cover.alt}
                 formats={['avif', 'webp']}
-                widths={[480, 720, 1080]}
-                sizes="(min-width: 800px) 544px, calc(100vw - 40px)"
+                widths={i === 0 ? [640, 1024, 1600, 2240] : [480, 720, 1080]}
+                sizes={
+                  i === 0
+                    ? '(min-width: 1248px) 1120px, calc(100vw - 2 * clamp(20px, 5vw, 64px))'
+                    : '(min-width: 800px) 544px, calc(100vw - 40px)'
+                }
                 class="still"
               />
               <span class="card-title">{w.title}</span>
@@ -64,6 +68,14 @@ import { works } from '../data/works';
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
+  }
+  /* The first work is featured full width; the rest pair up. An odd one out at the end also goes full width. */
+  .featured,
+  .works li:not(.featured):last-child:nth-child(even) {
+    grid-column: 1 / -1;
+  }
+  .featured .card :global(.still) {
+    aspect-ratio: 2 / 1;
   }
   .card {
     display: grid;
@@ -105,6 +117,9 @@ import { works } from '../data/works';
     .works ul {
       grid-template-columns: 1fr;
       gap: 56px;
+    }
+    .featured .card :global(.still) {
+      aspect-ratio: 16 / 10;
     }
   }
 </style>
