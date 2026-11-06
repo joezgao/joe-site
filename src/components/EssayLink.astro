@@ -1,0 +1,32 @@
+---
+// "Read the essay: … →" for a work that has an essay; renders nothing otherwise.
+import { essayHref, type Essay } from '../data/writing';
+
+interface Props {
+  essay?: Essay;
+  compact?: boolean; // Home cards: shorter label
+}
+
+const { essay, compact = false } = Astro.props;
+---
+
+{
+  essay && (
+    <a class:list={['essay-link', { label: compact }]} href={essayHref(essay)}>
+      {compact ? 'Essay' : 'Read the essay'}: {essay.data.title} →
+    </a>
+  )
+}
+
+<style>
+  .essay-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration-color: var(--muted);
+  }
+  .essay-link:hover {
+    color: var(--text);
+    text-decoration-color: currentColor;
+  }
+</style>

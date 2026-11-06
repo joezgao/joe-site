@@ -2,7 +2,11 @@
 import Base from '../layouts/Base.astro';
 import Owl from '../components/Owl.astro';
 import WorkCard from '../components/WorkCard.astro';
+import EssayLink from '../components/EssayLink.astro';
 import { works, trilogy, isSeries, seriesLabel } from '../data/works';
+import { essaysByWork } from '../data/writing';
+
+const essays = await essaysByWork();
 
 const series = works.filter(isSeries).sort((a, b) => a.series.part - b.series.part);
 const rest = works.filter((w) => !isSeries(w));
@@ -34,6 +38,7 @@ const featured = (i: number) => i === 0 && rest.length % 2 === 1;
                 widths={[400, 720, 1080]}
                 sizes="(min-width: 1248px) 352px, (min-width: 960px) calc((100vw - 2 * clamp(20px, 5vw, 64px) - 64px) / 3), calc(100vw - 40px)"
               />
+              <EssayLink essay={essays.get(w.id)} compact />
             </li>
           ))}
         </ul>

@@ -1,0 +1,185 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import DraftMark from '../../components/DraftMark.astro';
+import { works, isSeries, seriesLabel } from '../../data/works';
+import { getEssays, essayHref, readingMinutes, type Essay } from '../../data/writing';
+
+export async function getStaticPaths() {
+  const essays = await getEssays();
+  return essays.map((essay, i) => ({
+    params: { slug: essay.id },
+    props: { essay, next: essays[(i + 1) % essays.length] },
+  }));
+}
+
+interface Props {
+  essay: Essay;
+  next: Essay;
+}
+
+const { essay, next } = Astro.props;
+const { Content } = await render(essay);
+const work = works.find((w) => w.id === essay.data.work);
+const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${readingMinutes(essay)} min read`].filter(
+  (x): x is string => x !== undefined,
+);
+---
+
+<Base title={essay.data.title} description={essay.data.dek ?? essay.data.title} noindex={essay.data.draft}>
+  <article class="wrap essay">
+    <header>
+      <p class="label crumbs">
+        <a href="/writing">Writing</a>
+      </p>
+      {essay.data.draft && <DraftMark />}
+      <h1 class="display">{essay.data.title}</h1>
+      {essay.data.dek && <p class="dek">{essay.data.dek}</p>}
+      <p class="label">{meta.join(' · ')}</p>
+    </header>
+
+    <div class="longform">
+      <Content />
+    </div>
+
+    <footer>
+      {
+        work && (
+          <a class="label" href={`/work#${work.id}`}>
+            The piece: {work.title} →
+          </a>
+        )
+      }
+      {
+        next.id !== essay.id && (
+          <a class="label" href={essayHref(next)}>
+            Next essay: {next.data.title} →
+          </a>
+        )
+      }
+    </footer>
+  </article>
+</Base>
+
+<style>
+  .essay {
+    /* One column width for header, body and footer: DESIGN.md's 680px measure ≈ 65 characters at 20px. */
+    --col: var(--measure);
+    display: grid;
+    gap: 56px;
+    padding-block: 48px 0;
+  }
+  .essay > * {
+    width: 100%;
+    max-width: var(--col);
+    margin-inline: auto;
+  }
+  header {
+    display: grid;
+    gap: 16px;
+  }
+  .crumbs a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .crumbs a::before {
+    content: '← ';
+  }
+  .crumbs a:hover {
+    color: var(--text);
+  }
+  .dek {
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--muted);
+  }
+
+  /* Long-form body: rendered Markdown, so styles reach in with :global. */
+  .longform {
+    font-size: 20px;
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+    hanging-punctuation: first;
+  }
+  .longform :global(p) {
+    text-wrap: pretty;
+  }
+  .longform :global(p + p) {
+    margin-top: 1.1em;
+  }
+  .longform :global(h2) {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    margin: 2.4em 0 0.6em;
+  }
+  .longform :global(em) {
+    font-style: italic;
+  }
+  .longform :global(code) {
+    font-family: var(--mono);
+    font-size: 0.85em;
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background: var(--surface);
+  }
+  .longform :global(blockquote) {
+    margin: 1.6em 0;
+    padding-left: 24px;
+    border-left: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .longform :global(table) {
+    width: 100%;
+    margin: 1.6em 0;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 14px;
+    font-variant-numeric: tabular-nums;
+  }
+  .longform :global(th),
+  .longform :global(td) {
+    padding: 10px 12px 10px 0;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+  .longform :global(th) {
+    font-weight: 400;
+    color: var(--muted);
+  }
+
+  footer {
+    display: grid;
+    gap: 4px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  footer a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  footer a:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 480px) {
+    .essay {
+      padding-block: 24px 0;
+      gap: 40px;
+    }
+    .longform {
+      font-size: 18px;
+    }
+    .dek {
+      font-size: 18px;
+    }
+  }
+</style>

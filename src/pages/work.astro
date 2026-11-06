@@ -2,6 +2,10 @@
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import { works, trilogy, isSeries, seriesLabel } from '../data/works';
+import EssayLink from '../components/EssayLink.astro';
+import { essaysByWork } from '../data/writing';
+
+const essays = await essaysByWork();
 
 const words = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
 const count = words[works.length] ?? String(works.length);
@@ -63,6 +67,7 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
                 {s.body.map((p) => <p>{p}</p>)}
               </section>
             ))}
+            <EssayLink essay={essays.get(w.id)} />
           </div>
         </div>
 

@@ -1,0 +1,112 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import DraftMark from '../../components/DraftMark.astro';
+import { works, isSeries, seriesLabel } from '../../data/works';
+import { getEssays, getIntro, essayHref, readingMinutes } from '../../data/writing';
+
+const essays = await getEssays();
+const intro = await getIntro();
+const Intro = intro ? (await render(intro)).Content : null;
+const draft = essays.some((e) => e.data.draft) || intro?.data.draft === true;
+const kicker = (workId?: string) => {
+  const w = works.find((x) => x.id === workId);
+  return w && isSeries(w) ? seriesLabel(w) : undefined;
+};
+---
+
+<Base
+  title="Writing"
+  description="Three essays on how AI learns, thinks and creates, one for each piece in Joe Gao's trilogy."
+  noindex={draft}
+>
+  <article class="wrap page">
+    <header>
+      {draft && <DraftMark />}
+      <h1 class="display">Writing</h1>
+      {Intro && <div class="intro"><Intro /></div>}
+    </header>
+
+    <ol class="list">
+      {
+        essays.map((e) => (
+          <li>
+            {kicker(e.data.work) && <p class="label">{kicker(e.data.work)}</p>}
+            <h2 class="item-title">
+              <a href={essayHref(e)}>{e.data.title}</a>
+            </h2>
+            {e.data.dek && <p class="dek">{e.data.dek}</p>}
+            <p class="label">{readingMinutes(e)} min read</p>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: 64px;
+    padding-block: 64px 0;
+  }
+  header {
+    display: grid;
+    gap: 24px;
+  }
+  .intro {
+    max-width: 65ch;
+    font-size: 20px;
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .intro :global(em) {
+    color: var(--text);
+    font-style: normal;
+  }
+  .list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    max-width: var(--measure);
+  }
+  .list li {
+    display: grid;
+    gap: 8px;
+    padding-block: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .list li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+  .item-title {
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+  }
+  .item-title a {
+    text-decoration: none;
+  }
+  .item-title a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--muted);
+  }
+  .dek {
+    color: var(--muted);
+  }
+  @media (max-width: 480px) {
+    .page {
+      padding-block: 32px 0;
+      gap: 48px;
+    }
+    .intro {
+      font-size: 18px;
+    }
+    .item-title {
+      font-size: 24px;
+    }
+  }
+</style>
