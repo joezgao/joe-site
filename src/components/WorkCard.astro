@@ -1,0 +1,61 @@
+---
+// One work on Home: still, title, tagline, meta. `kicker` is the trilogy part ("I · Learns").
+import { Picture } from 'astro:assets';
+import type { Work } from '../data/works';
+
+interface Props {
+  work: Work;
+  kicker?: string;
+  widths: number[];
+  sizes: string;
+}
+
+const { work: w, kicker, widths, sizes } = Astro.props;
+---
+
+<a class="card" href={`/work#${w.id}`}>
+  <Picture src={w.cover.src} alt={w.cover.alt} formats={['avif', 'webp']} widths={widths} sizes={sizes} class="still" />
+  {kicker && <span class="label kicker">{kicker}</span>}
+  <span class="card-title">{w.title}</span>
+  <span class="card-line">{w.tagline}</span>
+  <span class="label card-meta">
+    {w.live && <span class="lamp" aria-hidden="true" />}
+    {w.year} · {w.form}
+  </span>
+</a>
+
+<style>
+  .card {
+    display: grid;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .card :global(.still) {
+    filter: var(--still-rest);
+    transition: filter 400ms var(--ease);
+    width: 100%;
+    aspect-ratio: var(--still-ratio, 16 / 10);
+    object-fit: cover;
+    border-radius: 4px;
+    background: var(--surface);
+    outline: 1px solid var(--line);
+    outline-offset: -1px;
+    margin-bottom: 16px;
+  }
+  .card:hover :global(.still),
+  .card:focus-visible :global(.still) {
+    filter: none;
+  }
+  .kicker {
+    margin-bottom: -4px;
+  }
+  .card-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+  .card-line {
+    color: var(--muted);
+  }
+</style>

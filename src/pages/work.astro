@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import { works } from '../data/works';
+import { works, trilogy, isSeries, seriesLabel } from '../data/works';
 
 const words = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
 const count = words[works.length] ?? String(works.length);
@@ -10,12 +10,14 @@ const lead =
   works.length === 1
     ? `One piece so far, made in ${years[0]}.`
     : `${count} pieces so far, ${years.length === 1 ? `${works.length === 2 ? 'both' : 'all'} made in ${years[0]}` : `made ${years.join('–')}`}.`;
+const seriesCount = works.filter(isSeries).length;
+const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilogy.title.charAt(0).toLowerCase()}${trilogy.title.slice(1)}.` : '';
 ---
 
 <Base title="Work" description={`Work by Joe Gao: ${works.map((w) => w.title).join(', ')}.`}>
   <header class="wrap page-head">
     <h1 class="display">Work</h1>
-    <p class="lead">{lead}</p>
+    <p class="lead">{lead} {trilogyLine}</p>
   </header>
 
   {
@@ -37,6 +39,7 @@ const lead =
 
         <div class="body">
           <div class="side">
+            {isSeries(w) && <p class="label">Trilogy · {seriesLabel(w)}</p>}
             <h2 id={`${w.id}-title`} class="title">{w.title}</h2>
             <p class="tagline">{w.tagline}</p>
             <dl class="meta">
