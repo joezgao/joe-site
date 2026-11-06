@@ -1,9 +1,8 @@
 // The site's list of works. Home and Work render whatever is here, in this order.
 // Home pairs them in two columns; with an odd count the first is featured full width.
 // Case-study copy comes from each project's own material: SPEC.md + README.md for micrograd 3D
-// (~/Developer/micrograd-3d) and Eden (~/Developer/eden-film); the piece itself for Almost Ripe
-// (vault 02 Projects/作品集/04 Almost Ripe/); README.md for Attention, in space and Noise, undone
-// (vault …/05 Attention, in space/, …/06 Noise, undone/).
+// and Eden (the micrograd-3d and eden-film repos); the piece itself for Almost Ripe; README.md for
+// Attention, in space and Noise, undone (each in its own repo).
 // Works with a `series` belong to the trilogy (how AI learns, thinks, creates); Home shows them first,
 // side by side as a triptych, then the rest.
 // Keep it factual: no claims that the specs, commits, renders or the piece don't back up.

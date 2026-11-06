@@ -3,7 +3,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-// Essays copied verbatim from the vault (02 Projects/作品集/Writing 草稿/); only the H1 and the italic
+// Essays copied verbatim from Joe's drafts; only the H1 and the italic
 // "On …" line move into `title` / `dek`. `intro` (order 0) opens the Writing page.
 // `draft: true` until Joe approves the two first-person opinions in the essays.
 const writing = defineCollection({
