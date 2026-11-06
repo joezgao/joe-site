@@ -1,0 +1,54 @@
+---
+// Joe's mark: a barn owl spelled in its own name (DESIGN.md signature). Drawn by scripts/owl.mjs:
+// uppercase = lit rim of the heart-shaped facial disc, lowercase = the face, dots = head and shoulders.
+import owl from '../data/owl.txt?raw';
+
+const lines = owl.replace(/\n$/, '').split('\n');
+const cols = Math.max(...lines.map((l) => l.length));
+// Build each row as an HTML string: JSX would inject formatting whitespace into the <pre>.
+const rowHtml = (line: string) =>
+  (line.match(/[A-Z]+|[a-z]+|·+|\s+/g) ?? [])
+    .map((r) => (/[A-Z]/.test(r) ? `<b>${r}</b>` : /[a-z]/.test(r) ? `<i>${r}</i>` : /·/.test(r) ? `<s>${r}</s>` : r))
+    .join('');
+const html = lines.map((l) => `<span class="row">${rowHtml(l)}</span>`).join('');
+---
+
+<figure class="owl" style={`--cols: ${cols}`}>
+  <pre aria-hidden="true" set:html={html} />
+  <figcaption class="visually-hidden">A barn owl drawn with the letters of its name.</figcaption>
+</figure>
+
+<style>
+  .owl {
+    width: 100%;
+    container-type: inline-size;
+    display: flex;
+    justify-content: center;
+  }
+  pre {
+    margin: 0;
+    font-family: var(--mono);
+    /* Fit --cols monospace columns (Geist Mono ≈ 0.6em each) into the column, capped at 15px. */
+    font-size: min(15px, calc(100cqw / (var(--cols) * 0.6)));
+    line-height: 1.05;
+    letter-spacing: 0;
+    white-space: normal; /* rows carry their own spacing; ignore whitespace between them */
+    user-select: none;
+  }
+  pre :global(.row) {
+    display: block;
+    white-space: pre;
+  }
+  pre :global(b) {
+    font-weight: 500;
+    color: var(--text);
+  }
+  pre :global(s) {
+    text-decoration: none;
+    color: var(--muted);
+  }
+  pre :global(i) {
+    font-style: normal;
+    color: var(--muted); /* full token, no opacity: keeps AA contrast */
+  }
+</style>

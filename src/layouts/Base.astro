@@ -1,0 +1,175 @@
+---
+import '@fontsource-variable/geist';
+import '@fontsource-variable/geist-mono';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = title ? `${title} — Joe Gao` : 'Joe Gao';
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { href: '/work', label: 'Work' },
+  { href: '/about', label: 'About' },
+  { href: '/now', label: 'Now' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a0a0a" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#fafafa" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      try {
+        const t = localStorage.getItem('theme');
+        if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip visually-hidden" href="#main">Skip to content</a>
+    <header class="wrap site-header">
+      <a class="name" href="/" aria-current={path === '/' ? 'page' : undefined}>Joe Gao</a>
+      <nav aria-label="Main">
+        <ul>
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="wrap site-footer">
+      <p class="label">© 2026 Joe Gao</p>
+      <button class="label theme" type="button" aria-label="Switch colour theme">
+        <span class="theme-name">Theme</span>
+      </button>
+    </footer>
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const btn = document.querySelector('.theme');
+        const label = btn.querySelector('.theme-name');
+        const current = () =>
+          root.dataset.theme ||
+          (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+        const render = () => {
+          const next = current() === 'dark' ? 'light' : 'dark';
+          label.textContent = `Switch to ${next}`;
+          btn.setAttribute('aria-label', `Switch to ${next} theme`);
+        };
+        btn.addEventListener('click', () => {
+          const next = current() === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try { localStorage.setItem('theme', next); } catch {}
+          render();
+        });
+        render();
+      })();
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip:focus {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    width: auto;
+    height: auto;
+    clip: auto;
+    padding: 8px 16px;
+    background: var(--text);
+    color: var(--bg);
+    z-index: 10;
+  }
+
+  .site-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 32px;
+    font-size: 14px;
+  }
+  .name {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-decoration: none;
+  }
+  nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 32px;
+  }
+  nav a,
+  .name {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  nav a {
+    color: var(--muted);
+    text-decoration: none;
+  }
+  nav a:hover,
+  nav a[aria-current='page'] {
+    color: var(--text);
+  }
+
+  .site-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-block: 48px;
+    margin-top: 96px;
+    /* hairline spans the content column, not the gutters */
+    background: linear-gradient(var(--line), var(--line)) center top / calc(100% - 2 * var(--gutter)) 1px
+      no-repeat;
+  }
+  .theme {
+    background: none;
+    border: 0;
+    padding: 0 0 0 16px;
+    min-height: 44px;
+    cursor: pointer;
+    transition: color 240ms var(--ease);
+  }
+  .theme:hover {
+    color: var(--text);
+  }
+
+  @media (max-width: 480px) {
+    .site-header {
+      padding-block: 24px;
+    }
+    nav ul {
+      gap: 24px;
+    }
+    .site-footer {
+      margin-top: 64px;
+      padding-block: 32px;
+    }
+  }
+</style>

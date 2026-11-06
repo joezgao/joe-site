@@ -1,0 +1,152 @@
+---
+import { Picture } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import { works } from '../data/works';
+---
+
+<Base title="Work" description="Two works by Joe Gao: micrograd 3D, a neural network you can watch learn, and Eden for the Newborn, a short film made in Blender from code.">
+  <header class="wrap page-head">
+    <h1 class="display">Work</h1>
+    <p class="lead">Two pieces so far, both made in 2026.</p>
+  </header>
+
+  {
+    works.map((w, i) => (
+      <article class="wrap case" id={w.id} aria-labelledby={`${w.id}-title`}>
+        <figure>
+          <Picture
+            src={w.cover.src}
+            alt={w.cover.alt}
+            formats={['avif', 'webp']}
+            widths={[640, 1120, 1680, 2240]}
+            sizes="(min-width: 1248px) 1120px, calc(100vw - 2 * clamp(20px, 5vw, 64px))"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            fetchpriority={i === 0 ? 'high' : 'auto'}
+            class="still"
+          />
+          <figcaption class="label">{w.cover.caption}</figcaption>
+        </figure>
+
+        <div class="body">
+          <div class="side">
+            <h2 id={`${w.id}-title`} class="title">{w.title}</h2>
+            <p class="tagline">{w.tagline}</p>
+            <dl class="meta">
+              <div><dt class="label">Year</dt><dd>{w.year}</dd></div>
+              <div><dt class="label">Form</dt><dd>{w.form}</dd></div>
+              <div><dt class="label">Made with</dt><dd>{w.tools}</dd></div>
+              <div>
+                <dt class="label">Status</dt>
+                <dd>
+                  {w.live && <span class="lamp" aria-hidden="true" />}
+                  {w.status}
+                </dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="prose">
+            {w.sections.map((s) => (
+              <section>
+                <h3 class="label">{s.heading}</h3>
+                {s.body.map((p) => <p>{p}</p>)}
+              </section>
+            ))}
+          </div>
+        </div>
+
+        {w.extra && (
+          <figure>
+            <Picture
+              src={w.extra.src}
+              alt={w.extra.alt}
+              formats={['avif', 'webp']}
+              widths={[640, 1120, 1680, 2240]}
+              sizes="(min-width: 1248px) 1120px, calc(100vw - 2 * clamp(20px, 5vw, 64px))"
+              class="still"
+            />
+            <figcaption class="label">{w.extra.caption}</figcaption>
+          </figure>
+        )}
+      </article>
+    ))
+  }
+</Base>
+
+<style>
+  .page-head {
+    display: grid;
+    gap: 16px;
+    padding-block: 64px 96px;
+  }
+  .case {
+    display: grid;
+    gap: 64px;
+    padding-bottom: 160px;
+    scroll-margin-top: 32px;
+  }
+  figure {
+    display: grid;
+    gap: 16px;
+  }
+  figure :global(.still) {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    background: var(--surface);
+    outline: 1px solid var(--line);
+    outline-offset: -1px;
+  }
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--measure));
+    gap: 64px;
+    justify-content: space-between;
+  }
+  .side {
+    display: grid;
+    align-content: start;
+    gap: 16px;
+  }
+  .tagline {
+    color: var(--muted);
+    font-size: 20px;
+    line-height: 1.4;
+    text-wrap: balance;
+  }
+  .meta {
+    display: grid;
+    gap: 16px;
+    margin-top: 24px;
+  }
+  dd {
+    font-size: 16px;
+  }
+  .prose {
+    display: grid;
+    gap: 32px;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .prose h3 {
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 860px) {
+    .page-head {
+      padding-block: 32px 64px;
+    }
+    .case {
+      gap: 40px;
+      padding-bottom: 96px;
+    }
+    .body {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .meta {
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 24px;
+    }
+  }
+</style>

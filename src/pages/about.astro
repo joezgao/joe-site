@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="About" description="Joe Gao studies computer science and AI at Stanford and works where AI research, 3D and products meet.">
+  <article class="wrap page">
+    <h1 class="display">About</h1>
+
+    <div class="prose">
+      <p class="lead">
+        I’m Joe Gao. I study computer science and AI at Stanford.
+      </p>
+      <p>
+        I’m drawn to three things: AI research, 3D, and products. The work I like best sits where
+        they meet, where technology is made carefully enough to feel like art.
+      </p>
+      <p>
+        This site is where that work lives: what each piece is, how it was made, and an honest note
+        on what still needs doing.
+      </p>
+    </div>
+
+    <dl class="facts">
+      <div><dt class="label">Studying</dt><dd>Computer Science &amp; AI, Stanford</dd></div>
+      <div><dt class="label">Interests</dt><dd>AI research · 3D · Products</dd></div>
+      <div><dt class="label">The owl</dt><dd>A barn owl, my long-time avatar</dd></div>
+    </dl>
+  </article>
+</Base>
+
+<style>
+  .page {
+    display: grid;
+    gap: 48px;
+    padding-block: 64px 0;
+  }
+  .prose .lead {
+    color: var(--text);
+  }
+  .facts {
+    display: grid;
+    gap: 24px;
+    max-width: var(--measure);
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .facts div {
+    display: grid;
+    grid-template-columns: 128px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  @media (max-width: 480px) {
+    .page {
+      padding-block: 32px 0;
+    }
+    .facts div {
+      grid-template-columns: 1fr;
+      gap: 4px;
+    }
+  }
+</style>

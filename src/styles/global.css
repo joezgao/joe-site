@@ -1,0 +1,198 @@
+/* Tokens from Joe's DESIGN.md: near-black, one warm light, Geist + Geist Mono, 8px grid. */
+:root {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --line: #262626;
+  --text: #ededed;
+  --muted: #8a8a8a;
+  --accent: #f5b46a;
+  --still-rest: brightness(0.8) saturate(0.8);
+
+  --sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --gutter: clamp(20px, 5vw, 64px);
+  --wide: 1120px;
+  --measure: 680px;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Light = inverted, still monochrome; the accent darkens to keep AA contrast. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme='dark']) {
+    color-scheme: light;
+    --bg: #fafafa;
+    --surface: #f0f0f0;
+    --line: #e0e0e0;
+    --text: #111111;
+    --muted: #5c5c5c;
+    --accent: #94560e;
+    --still-rest: saturate(0.7);
+  }
+}
+:root[data-theme='light'] {
+  color-scheme: light;
+  --bg: #fafafa;
+  --surface: #f0f0f0;
+  --line: #e0e0e0;
+  --text: #111111;
+  --muted: #5c5c5c;
+  --accent: #94560e;
+  --still-rest: saturate(0.7);
+}
+
+@view-transition {
+  navigation: auto;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration-color: var(--line);
+  text-underline-offset: 0.25em;
+  text-decoration-thickness: 1px;
+  transition: color 240ms var(--ease), text-decoration-color 240ms var(--ease);
+}
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+::selection {
+  background: var(--text);
+  color: var(--bg);
+}
+
+h1,
+h2,
+h3,
+p,
+dl,
+dd,
+figure,
+ul,
+ol {
+  margin: 0;
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--wide) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Type scale: 14 / 16 / 20 / 32 / 56 */
+.display {
+  font-size: clamp(40px, 6vw, 56px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+.title {
+  font-size: 32px;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+.lead {
+  font-size: 20px;
+  line-height: 1.5;
+  letter-spacing: -0.01em;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+.label {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+}
+.prose {
+  max-width: var(--measure);
+}
+.prose p {
+  text-wrap: pretty;
+}
+.prose p + p {
+  margin-top: 16px;
+}
+
+.lamp {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--accent) 60%, transparent);
+  vertical-align: middle;
+  margin-right: 8px;
+  transform: translateY(-1px);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+  @view-transition {
+    navigation: none;
+  }
+}
