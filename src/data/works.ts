@@ -1,10 +1,11 @@
-// The site's list of works. Home and Work render whatever is here, in this order;
-// the first entry is the featured (full-width) card on Home.
-// Case-study copy comes from each project's own material: SPEC.md for micrograd 3D (~/Developer/micrograd-3d)
-// and Eden (~/Developer/eden-film); the piece itself for Almost Ripe (vault 02 Projects/作品集/04 Almost Ripe/).
+// The site's list of works. Home and Work render whatever is here, in this order.
+// Home pairs them in two columns; with an odd count the first is featured full width.
+// Case-study copy comes from each project's own material: SPEC.md + README.md for micrograd 3D
+// (~/Developer/micrograd-3d) and Eden (~/Developer/eden-film); the piece itself for Almost Ripe
+// (vault 02 Projects/作品集/04 Almost Ripe/); README.md for Attention, in space (vault …/05 Attention, in space/).
 // Keep it factual: no claims that the specs, commits, renders or the piece don't back up.
 //
-// To add a work (e.g. "Attention in space" once it has material in the vault):
+// To add a work:
 //   1. copy its stills into src/assets/ (16:9 or wider reads best; 1920 px wide if available);
 //   2. import them below and add one entry to `works` with id, title, tagline, year, form, tools,
 //      status, live, cover (+ optional extra) and What / How / Next sections;
@@ -17,6 +18,8 @@ import edenTree from '../assets/eden-tree.png';
 import edenAerial from '../assets/eden-aerial.png';
 import almostRipeTower from '../assets/almost-ripe-tower.png';
 import almostRipeCorridor from '../assets/almost-ripe-corridor.png';
+import attentionHead from '../assets/attention-head.png';
+import attentionAll from '../assets/attention-all.png';
 
 export interface Work {
   id: string;
@@ -72,13 +75,54 @@ export const works: Work[] = [
     ],
   },
   {
+    id: 'attention',
+    title: 'Attention, in space',
+    tagline: 'Watch a tiny GPT read, in 3D, while you type.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'NumPy · three.js · Web Workers',
+    status: 'Finished, private for now',
+    live: false,
+    cover: {
+      src: attentionHead,
+      alt: 'Letters of a line of text along the bottom and four layers above them; in layer 2 a bright golden fan of arcs sweeps from one letter back across the earlier ones.',
+      caption: 'Layer 2, head 3: a word-boundary head, looking back to the last space or line break.',
+    },
+    extra: {
+      src: attentionAll,
+      alt: 'All four layers at once: hundreds of thin golden arcs rising between the letters of “LEONTES: She is, let me, but”, with the model’s next-letter guesses along the top.',
+      caption: 'All layers, heads averaged, while the model writes.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A tiny character-level GPT, trained from scratch on Shakespeare, running entirely in the browser. The letters you type sit along the bottom and four layers stack above them. Each glowing arc is a letter looking back at an earlier one, brighter the harder it looks, and the top row is the model’s guess at what comes next. It follows micrograd 3D: that piece shows a tiny network learning, this one shows a transformer reading.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'nanoGPT’s design, scaled down to 809,856 parameters: 4 layers, 4 heads, 64 characters of context. PyTorch could not be installed, so it is written in pure NumPy with a hand-derived backward pass, checked against finite differences, and trained in 32 minutes on 2 CPU cores to a validation loss of 1.53.',
+          'The weights ship as int8 inside the page. The forward pass runs in a Web Worker so the 3D view never waits, and every arc is one ribbon in a single mesh, its width set on the GPU.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'Its spelling is mostly right and it has the shape of a play, but the meaning is nonsense. 60 frames a second still needs checking on real hardware; so far it has only run under software WebGL.',
+        ],
+      },
+    ],
+  },
+  {
     id: 'micrograd-3d',
     title: 'micrograd 3D',
     tagline: 'Watch a tiny neural network learn, one gradient at a time.',
     year: '2026',
     form: 'Interactive, in the browser',
     tools: 'TypeScript · React Three Fiber',
-    status: 'v1 runs locally',
+    status: 'v1.1 runs locally',
     live: false,
     cover: {
       src: microgradNetwork,
@@ -87,8 +131,8 @@ export const works: Work[] = [
     },
     extra: {
       src: micrograd,
-      alt: 'The whole micrograd 3D page: the 3D network on the left; on the right, play, step and reset controls, a speed slider, step, loss and accuracy readouts, a loss curve and the two-moons data plot with its decision boundary.',
-      caption: 'The whole page: controls, loss curve, and the decision boundary bending through the data (99% accuracy).',
+      alt: 'micrograd 3D in backprop mode: one neuron bright in the 3D network with its incoming weights glowing, and a panel on the right working through the chain rule for hidden layer 2, neuron 2, step 4 of 20, above the two-moons plot with the traced point circled.',
+      caption: 'v1.1, stepping through backprop: hidden layer 2, neuron 2, with the chain rule written out.',
     },
     sections: [
       {
@@ -101,13 +145,13 @@ export const works: Work[] = [
         heading: 'How',
         body: [
           'A 2 → 8 → 8 → 1 network learns the two-moons dataset with hinge loss and plain gradient descent. Every neuron is a sphere and every one of its 88 weights is a line. A line glows warm in proportion to the gradient backprop just sent through it, so you see where learning flows rather than what the weights are.',
-          'Beside it, the decision boundary bends through the data and a loss curve falls on a log scale. Play, pause, step, or run it at up to 120 steps a second. Tests check the gradients against values worked out by hand and against finite differences.',
+          'Beside it, the decision boundary bends through the data and a loss curve falls on a log scale. Play, pause, step, or run it at up to 120 steps a second. Pause at any moment to step through one point’s backward pass, neuron by neuron, with the chain rule written out. Tests check the gradients against values worked out by hand and against finite differences.',
         ],
       },
       {
         heading: 'Next',
         body: [
-          'A mode that replays the backward pass node by node, then a public demo.',
+          'A public demo.',
         ],
       },
     ],
