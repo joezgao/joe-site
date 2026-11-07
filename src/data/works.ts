@@ -22,7 +22,7 @@ import almostRipeCorridor from '../assets/almost-ripe-corridor.png';
 import attentionHead from '../assets/attention-head.png';
 import attentionAll from '../assets/attention-all.png';
 import noiseKnot from '../assets/noise-knot.png';
-import noiseMid from '../assets/noise-mid.png';
+import noiseGuess from '../assets/noise-guess.png';
 import atwdLeaf from '../assets/atwd-leaf.png';
 import atwdStoma from '../assets/atwd-stoma.png';
 import almostRipePoster from '../assets/loops/almost-ripe-poster.png';
@@ -169,21 +169,22 @@ export const works: Work[] = [
       caption: 't = 0: the knot. Each point trails its last few steps.',
     },
     extra: {
-      src: noiseMid,
-      alt: 'A loose cloud of faint cyan points with short trails, only the rough outline of the knot showing.',
-      caption: 't = 20: still mostly noise. Under the cosine schedule the knot appears only in the last 10–15 of the hundred steps.',
+      src: noiseGuess,
+      alt: 'Faint gray points scattered in a cloud, and bright cyan dots tracing a trefoil knot through it, with thin lines joining some points to their dots.',
+      caption: 'Guess at t = 20: the points are still a cloud (median 0.35 from the knot’s centre line), but the network’s guesses already trace the knot (0.083). Each line runs from a point to its guess, the denoising direction there.',
     },
     sections: [
       {
         heading: 'What',
         body: [
-          'A tiny diffusion model, trained from scratch, running entirely in the browser. It starts with 4,000 points of pure Gaussian noise and moves them, step by step, into a trefoil knot, in 3D. Scrub from noise to knot, re-noise it and watch the model draw a new one, or turn on Guess to see, for every point, the network’s estimate of the clean point it came from.',
+          'A tiny diffusion model, trained from scratch, running entirely in the browser. It starts with 4,000 points of pure Gaussian noise and moves them, step by step, into a trefoil knot, in 3D. Scrub from noise to knot, re-noise it and watch the model draw a new one, or turn on Guess to see, for every point, the network’s estimate of the clean point it came from. The network sees the knot long before the points do.',
         ],
       },
       {
         heading: 'How',
         body: [
           'A DDPM (Ho, Jain & Abbeel 2020) with 100 steps and the cosine schedule of Nichol & Dhariwal (2021), sampled with DDIM (Song, Meng & Ermon 2020). The network, a 42,627-parameter MLP, learns one thing: look at a noisy point and predict the noise that was added. It is written in NumPy with a hand-written backward pass, checked against finite differences, and trained in 23 minutes on 2 CPU cores.',
+          'Under the cosine schedule the knot only becomes legible in the last 10–15 of the 100 steps. So the scrubber and playback move evenly in log noise level, not in t: t = 10 sits in the middle of the track, and the readout always shows the true step.',
           'The weights ship as float16 inside a page of about 160 kB, and the reverse process runs in Web Workers. Measured on those shipped weights, the median sample lands 0.027 from the knot’s centre line, and no part of the knot is left uncovered.',
         ],
       },
