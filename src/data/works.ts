@@ -1,8 +1,8 @@
 // The site's list of works. Home and Work render whatever is here, in this order.
 // Home pairs them in two columns; with an odd count the first is featured full width.
 // Case-study copy comes from each project's own material: SPEC.md + README.md for micrograd 3D
-// and Eden (the micrograd-3d and eden-film repos); the piece itself for Almost Ripe; README.md for
-// Attention, in space and Noise, undone (each in its own repo).
+// (the micrograd-3d repo); the piece itself for Almost Ripe; README.md for the others
+// (each in its own repo).
 // Works with a `series` belong to the trilogy (how AI learns, thinks, creates); Home shows them first,
 // side by side as a triptych. Works with `section: 'research'` follow under "Research · How AI sees scale",
 // then the rest ("Stories").
@@ -17,8 +17,6 @@
 import type { ImageMetadata } from 'astro';
 import micrograd from '../assets/micrograd-3d.png';
 import microgradNetwork from '../assets/micrograd-3d-network.png';
-import edenTree from '../assets/eden-tree.png';
-import edenAerial from '../assets/eden-aerial.png';
 import almostRipeTower from '../assets/almost-ripe-tower.png';
 import almostRipeCorridor from '../assets/almost-ripe-corridor.png';
 import attentionHead from '../assets/attention-head.png';
@@ -380,46 +378,6 @@ export const works: Work[] = [
       {
         heading: 'Next',
         body: ['Finished after two polish rounds on the tree, the grass and the shatter. Private for now.'],
-      },
-    ],
-  },
-  {
-    id: 'eden',
-    title: 'Eden for the Newborn',
-    tagline: 'A memory of a world yet to come.',
-    year: '2026',
-    form: 'Short film, 16 seconds',
-    tools: 'Blender · Python · EEVEE',
-    status: 'Best-version preview, then the final 1080p render',
-    live: true,
-    cover: {
-      src: edenTree,
-      alt: 'A lone apple tree on the crest of a hill of golden grass, a low sun to its right in a pale, cloudy evening sky.',
-      caption: 'Shot 7: the apple tree on the crest at golden hour. Preview still, 1920 × 1080.',
-    },
-    extra: {
-      src: edenAerial,
-      alt: 'An oblique aerial view at golden hour of a ring-shaped glass building in a wooded valley, haze thickening toward the horizon.',
-      caption: 'Shot 8: the aerial over the valley, where the film ends.',
-    },
-    sections: [
-      {
-        heading: 'What',
-        body: [
-          'Three shots, sixteen seconds. A garage door rolls up onto golden grass. The camera pushes low through a sunset hillside, rises past a lone apple tree, and ends above a ring-shaped glass campus in golden-hour haze before fading to black.',
-        ],
-      },
-      {
-        heading: 'How',
-        body: [
-          'Every scene is built from Python scripts in Blender: the garage, the terrain, the grass, the sky, the valley and the campus. It renders headless with EEVEE at 1920 × 1080 and 24 frames a second, under one colour grade and a single low sun. It is an homage, so nothing comes from the original: no footage, no music, no logos. The only outside assets are Poly Haven’s CC0 models and textures, each credited.',
-        ],
-      },
-      {
-        heading: 'Next',
-        body: [
-          'Up close, the houses and the campus still read as CG; the last shot leans on haze, canopy and light. A best-version pass is in review; the final 1080p render follows.',
-        ],
       },
     ],
   },
