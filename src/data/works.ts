@@ -4,7 +4,8 @@
 // and Eden (the micrograd-3d and eden-film repos); the piece itself for Almost Ripe; README.md for
 // Attention, in space and Noise, undone (each in its own repo).
 // Works with a `series` belong to the trilogy (how AI learns, thinks, creates); Home shows them first,
-// side by side as a triptych, then the rest.
+// side by side as a triptych. Works with `section: 'research'` follow under "Research · How AI sees scale",
+// then the rest ("Stories").
 // Keep it factual: no claims that the specs, commits, renders or the piece don't back up.
 //
 // To add a work:
@@ -24,6 +25,8 @@ import attentionHead from '../assets/attention-head.png';
 import attentionAll from '../assets/attention-all.png';
 import noiseKnot from '../assets/noise-knot.png';
 import noiseMid from '../assets/noise-mid.png';
+import atwdLeaf from '../assets/atwd-leaf.png';
+import atwdStoma from '../assets/atwd-stoma.png';
 
 export interface Work {
   id: string;
@@ -35,12 +38,16 @@ export interface Work {
   status: string;
   live: boolean; // something is happening right now (gets the one point of light)
   series?: { part: 1 | 2 | 3; verb: 'Learns' | 'Thinks' | 'Creates' }; // the trilogy
+  section?: 'research';
   cover: { src: ImageMetadata; alt: string; caption: string };
   extra?: { src: ImageMetadata; alt: string; caption: string };
   sections: { heading: string; body: string[] }[];
 }
 
 export const trilogy = { title: 'How AI learns, thinks, creates', numerals: ['I', 'II', 'III'] } as const;
+
+export const research = { title: 'How AI sees scale' } as const;
+export const isResearch = (w: Work) => w.section === 'research';
 
 export type SeriesWork = Work & { series: NonNullable<Work['series']> };
 export const isSeries = (w: Work): w is SeriesWork => w.series !== undefined;
@@ -170,6 +177,53 @@ export const works: Work[] = [
         heading: 'Next',
         body: [
           'The data is one fixed shape with no conditioning: a small, faithful DDPM, not a demonstration of scale. The frame rate still needs measuring on real hardware.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'all-the-way-down',
+    title: 'All the way down',
+    tagline: 'One maple leaf, from the whole leaf down to a single stoma.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'WebGL · three.js · Web Workers',
+    status: 'Finished',
+    live: false,
+    section: 'research',
+    cover: {
+      src: atwdLeaf,
+      alt: 'An autumn maple leaf, orange with pale veins, alone on a black background.',
+      caption: 'Level 0: the whole leaf, a 24 cm field.',
+    },
+    extra: {
+      src: atwdStoma,
+      alt: 'Close up of a single stoma: a dark slit-shaped pore between two curved rows of pale guard cells on an orange surface.',
+      caption: 'Four decades in: one stoma, a 24 µm field, with its guard cells and pore.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A multi-scale 3D viewer that runs in the browser. One autumn maple leaf at five scales, each ten times finer than the last: the leaf, its veins, the areoles, the pavement cells and a single stoma, 4.5 orders of magnitude to scroll or pinch through. It implements the scale-aware opacity modulation of WonderZoom (Jin Cao, Hong-Xing Yu and Jiajun Wu, Multi-Scale 3D World Generation, CVPR 2026): every surfel remembers the scale it was made at and fades, in log scale, as you move away from it. A toggle turns modulation off, so you can see what the method prevents.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'WonderZoom’s released scenes could not be downloaded where this was built, so the scene is a procedural test scene, not a WonderZoom output: 288,556 surfels over five levels, each deeper level a local patch, as a zoom-in would generate. The WebGL renderer is written from scratch. Each surfel is a flattened Gaussian projected in the vertex shader; on every camera move the CPU computes each surfel’s opacity, culls the ones that have faded out, sorts the rest by depth and uploads only what is drawn. The cross-fade checks out numerically, 0.50 and 0.50 at the midpoint between two levels, and a spatial feather, an extension of the paper’s equation, keeps the weights summing to 1 at the edge of each patch.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'Timed with the piece’s own Measure routine in Chrome 157 on a Mac with an Apple M5 Pro GPU (WebGL through ANGLE on Metal), at an 1800 × 1226 drawing buffer, 120 frames per mode. With the whole leaf in view, modulation draws 50,363 of the 288,556 surfels and runs at about 500 fps; without it, about 54 fps, roughly 9× slower. At the areoles it is about 680 fps against 180. At the stoma, frustum culling already removes most coarse surfels and both run at about 610 fps; there the gain is visual, because without modulation the coarse surfels blur over the fine ones.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'A converter for WonderZoom’s released scenes, so a real one opens from a link. The memory figures the page shows are an estimate from a stated model; WebGL cannot report GPU memory.',
         ],
       },
     ],

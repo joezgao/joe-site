@@ -1,7 +1,7 @@
 ---
 import { Picture } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import { works, trilogy, isSeries, seriesLabel } from '../data/works';
+import { works, trilogy, research, isSeries, isResearch, seriesLabel } from '../data/works';
 import EssayLink from '../components/EssayLink.astro';
 import { essaysByWork } from '../data/writing';
 
@@ -44,6 +44,7 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
         <div class="body">
           <div class="side">
             {isSeries(w) && <p class="label">Trilogy · {seriesLabel(w)}</p>}
+            {isResearch(w) && <p class="label">Research · {research.title}</p>}
             <h2 id={`${w.id}-title`} class="title">{w.title}</h2>
             <p class="tagline">{w.tagline}</p>
             <dl class="meta">
