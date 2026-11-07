@@ -19,7 +19,7 @@ npm run build      # static site into dist/
 
 | Page | Source |
 |---|---|
-| Home: the owl, the trilogy (how AI learns, thinks, creates), research (how AI sees scale), then stories | `src/pages/index.astro` |
+| Home: the owl, the trilogy (how AI learns, thinks, creates), research (how AI sees scale, shape and text), then stories; cards with a loop play it muted, poster first, only near the viewport and never under reduced motion | `src/pages/index.astro` |
 | Work: every piece with its case study | `src/pages/work.astro` |
 | Writing: an intro and three essays, one per trilogy piece | `src/pages/writing/`, essays in `src/content/writing/` |
 | About, Now | `src/pages/about.astro`, `src/pages/now.astro` |

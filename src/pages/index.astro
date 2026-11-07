@@ -53,13 +53,14 @@ const researchFeatured = featuredIn(researchWorks);
     researchWorks.length > 0 && (
       <section class="wrap works" aria-labelledby="research-heading">
         <h2 id="research-heading" class="label">
-          Research · {research.title}
+          {research.title}
         </h2>
         <ul class="pairs">
           {researchWorks.map((w, i) => (
             <li class:list={[{ featured: researchFeatured(i) }]}>
               <WorkCard
                 work={w}
+                kicker={w.question}
                 widths={researchFeatured(i) ? [640, 1024, 1600, 2240] : [480, 720, 1080]}
                 sizes={
                   researchFeatured(i)

@@ -37,6 +37,7 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
             loading={i === 0 ? 'eager' : 'lazy'}
             fetchpriority={i === 0 ? 'high' : 'auto'}
             class="still"
+            style={`max-width: ${w.cover.src.width}px`}
           />
           <figcaption class="label">{w.cover.caption}</figcaption>
         </figure>
@@ -44,7 +45,7 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
         <div class="body">
           <div class="side">
             {isSeries(w) && <p class="label">Trilogy · {seriesLabel(w)}</p>}
-            {isResearch(w) && <p class="label">Research · {research.title}</p>}
+            {isResearch(w) && <p class="label">{research.title}{w.question && ` · ${w.question}`}</p>}
             <h2 id={`${w.id}-title`} class="title">{w.title}</h2>
             <p class="tagline">{w.tagline}</p>
             <dl class="meta">
@@ -77,6 +78,7 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
           <figure>
             <Picture
               src={w.extra.src}
+              style={`max-width: ${w.extra.src.width}px`}
               alt={w.extra.alt}
               formats={['avif', 'webp']}
               widths={[640, 1120, 1680, 2240]}

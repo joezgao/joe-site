@@ -31,6 +31,12 @@ import almostRipePoster from '../assets/loops/almost-ripe-poster.png';
 import attentionPoster from '../assets/loops/attention-poster.png';
 import noisePoster from '../assets/loops/noise-undone-poster.png';
 import atwdPoster from '../assets/loops/all-the-way-down-poster.png';
+import twelvePoster from '../assets/loops/seen-from-twelve-sides-poster.png';
+import readsPoster from '../assets/loops/how-a-model-reads-poster.png';
+import twelveCameras from '../assets/twelve-cameras.png';
+import twelveHeldout from '../assets/twelve-heldout.png';
+import reads2000 from '../assets/reads-2000.png';
+import reads12 from '../assets/reads-12.png';
 
 export interface Work {
   id: string;
@@ -43,6 +49,8 @@ export interface Work {
   live: boolean; // something is happening right now (gets the one point of light)
   series?: { part: 1 | 2 | 3; verb: 'Learns' | 'Thinks' | 'Creates' }; // the trilogy
   section?: 'research';
+  /** Research works: what the study looks at, e.g. "How AI sees scale". */
+  question?: string;
   cover: { src: ImageMetadata; alt: string; caption: string };
   extra?: { src: ImageMetadata; alt: string; caption: string };
   /** A short silent loop shown instead of the cover still (cards and the Work cover). Video in public/loops/. */
@@ -52,7 +60,7 @@ export interface Work {
 
 export const trilogy = { title: 'How AI learns, thinks, creates', numerals: ['I', 'II', 'III'] } as const;
 
-export const research = { title: 'How AI sees scale' } as const;
+export const research = { title: 'Research' } as const;
 export const isResearch = (w: Work) => w.section === 'research';
 
 export type SeriesWork = Work & { series: NonNullable<Work['series']> };
@@ -200,6 +208,7 @@ export const works: Work[] = [
     live: false,
     loop: { src: '/loops/all-the-way-down.mp4', poster: atwdPoster, label: 'A zoom through an autumn maple leaf, from the whole leaf down to a single stoma between its guard cells.' },
     section: 'research',
+    question: 'How AI sees scale',
     cover: {
       src: atwdLeaf,
       alt: 'An autumn maple leaf, orange with pale veins, alone on a black background.',
@@ -233,6 +242,104 @@ export const works: Work[] = [
         heading: 'Next',
         body: [
           'A converter for WonderZoom’s released scenes, so a real one opens from a link. The memory figures the page shows are an estimate from a stated model; WebGL cannot report GPU memory.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'seen-from-twelve-sides',
+    title: 'Seen from twelve sides',
+    tagline: 'Twelve photographs of a stone become 4,000 Gaussians.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'NumPy · three.js',
+    status: 'Finished',
+    live: false,
+    loop: { src: '/loops/seen-from-twelve-sides.mp4', poster: twelvePoster, label: 'A grey blur of Gaussians tightening into a stone as training runs, then the cameras that photographed it appearing around it.' },
+    section: 'research',
+    question: 'How AI sees shape',
+    cover: {
+      src: twelveCameras,
+      alt: 'A small grey stone with a pale quartz band in the middle of a ring of wireframe cameras, each holding the photograph it took.',
+      caption: 'Step 3,000: the fitted stone and the twelve training cameras, each holding its photograph.',
+    },
+    extra: {
+      src: twelveHeldout,
+      alt: 'Three views of the stone side by side: a held-out photograph, the Gaussians rendered from the same pose, and a dark difference image where only the outline and the quartz band glow.',
+      caption: 'A camera training never saw: its photograph, the Gaussians from the same pose, and the difference (×4).',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A 3D Gaussian Splatting fit written from scratch in plain NumPy, shown in the browser. Twelve rendered photographs of a procedural stone go in; a cloud of 4,000 Gaussians comes out. Scrub through training and watch the grey cloud become the stone, draw the training cameras with their photographs, and hold H to compare a camera that training never saw with the Gaussians rendered from the same pose.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'The representation and rendering follow 3D Gaussian Splatting (Kerbl, Kopanas, Leimkühler & Drettakis, SIGGRAPH 2023), with the EWA projection of Zwicker, Pfister, van Baar & Gross (2001). The rasterizer, its hand-written backward pass and the gradient check (worst relative error 1.9e-8) were written for this piece with Claude in NumPy, not copied from an implementation. Training runs 3,000 steps of Adam, one 96 px view per step, in about 26 minutes on two shared CPU cores; the page eases between 14 logged snapshots.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'At the end, whole-image PSNR is 33.60 dB on the twelve training views and 28.45 dB on the four held-out ones. Counting only the pixels the stone covers: 31.91 and 27.21 dB.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'The gap between training and held-out views is overfitting to twelve photographs. These photographs are synthetic and perfectly posed; real captures need camera poses from structure-from-motion, view-dependent colour and far more Gaussians.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'how-a-model-reads',
+    title: 'How a model reads',
+    tagline: 'Watch text break into tokens, merge by merge.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'Python · JavaScript',
+    status: 'Finished',
+    live: false,
+    loop: { src: '/loops/how-a-model-reads.mp4', poster: readsPoster, label: 'Text split into coloured token pills that slide together as merges are applied, with the list of merges beside it.' },
+    section: 'research',
+    question: 'How AI reads text',
+    cover: {
+      src: reads2000,
+      alt: 'Three lines of text split into rounded coloured pills, one per token: whole words like “the”, “of” and “York”, and pieces like “disc” plus “ont” plus “ent”.',
+      caption: 'After all 2,000 merges: 125 characters in 44 tokens.',
+    },
+    extra: {
+      src: reads12,
+      alt: 'The same three lines after only 12 merges: nearly every character is still its own pill, with a few pairs such as “the” joined.',
+      caption: 'The same text after 12 merges: 111 tokens, still mostly single characters.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A byte-pair encoding (BPE) tokenizer learned from scratch in plain Python on tiny-shakespeare, from Andrej Karpathy’s char-rnn. Type or paste text and it splits into coloured pills, one colour per token. A slider runs from 0 merges, single characters, to all 2,000; as you scrub, neighbouring pills slide together and take the new token’s colour.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'The merge loop of Sennrich, Haddow & Birch (2016), on Philip Gage’s pair-replacement idea (1994), with a GPT-2-style pre-split that keeps a word’s leading space and never merges across words. It starts from the 65 characters in the text, not from bytes. 2,000 merges over 1,115,394 characters take about 3 seconds. The page encodes with the same earliest-merge-first rule; a test runs 3,444 cases through the shipped page, and all 3,444 match the Python reference exactly.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'On the training text, characters per token rise from 1.02 after one merge to 2.21 after 500 and 2.90 after 2,000. Merge 1 joins a space and t; merge 12 makes “ the”; the longest token is NORTHUMBERLAND.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'The vocabulary is shaped by the script format: speaker names in capitals take merges that modern text never uses, and modern words fall apart (smartphone becomes s m art p h one). Characters never seen in training stay single, where a byte-level tokenizer would merge their bytes.',
         ],
       },
     ],
