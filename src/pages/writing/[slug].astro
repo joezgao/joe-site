@@ -3,7 +3,7 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import DraftMark from '../../components/DraftMark.astro';
 import { works, isSeries, seriesLabel } from '../../data/works';
-import { getEssays, essayHref, readingMinutes, type Essay } from '../../data/writing';
+import { getEssays, essayHref, essayHtml, readingMinutes, type Essay } from '../../data/writing';
 
 export async function getStaticPaths() {
   const essays = await getEssays();
@@ -20,6 +20,7 @@ interface Props {
 
 const { essay, next } = Astro.props;
 const { Content } = await render(essay);
+const html = essayHtml(essay);
 const work = works.find((w) => w.id === essay.data.work);
 const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${readingMinutes(essay)} min read`].filter(
   (x): x is string => x !== undefined,
@@ -39,7 +40,7 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
     </header>
 
     <div class="longform">
-      <Content />
+      {html ? <Fragment set:html={html} /> : <Content />}
     </div>
 
     <footer>

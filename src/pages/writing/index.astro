@@ -3,11 +3,12 @@ import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import DraftMark from '../../components/DraftMark.astro';
 import { works, isSeries, seriesLabel } from '../../data/works';
-import { getEssays, getIntro, essayHref, readingMinutes } from '../../data/writing';
+import { getEssays, getIntro, essayHref, essayHtml, readingMinutes } from '../../data/writing';
 
 const essays = await getEssays();
 const intro = await getIntro();
 const Intro = intro ? (await render(intro)).Content : null;
+const introHtml = intro ? essayHtml(intro) : undefined;
 const draft = essays.some((e) => e.data.draft) || intro?.data.draft === true;
 const kicker = (workId?: string) => {
   const w = works.find((x) => x.id === workId);
@@ -24,7 +25,7 @@ const kicker = (workId?: string) => {
     <header>
       {draft && <DraftMark />}
       <h1 class="display">Writing</h1>
-      {Intro && <div class="intro"><Intro /></div>}
+      {introHtml ? <div class="intro" set:html={introHtml} /> : Intro && <div class="intro"><Intro /></div>}
     </header>
 
     <ol class="list">

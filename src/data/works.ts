@@ -128,13 +128,13 @@ export const works: Work[] = [
       {
         heading: 'What',
         body: [
-          'A tiny character-level GPT, trained from scratch on Shakespeare, running entirely in the browser. The letters you type sit along the bottom and four layers stack above them. Each glowing arc is a letter looking back at an earlier one, brighter the harder it looks, and the top row is the model’s guess at what comes next. It follows micrograd 3D: that piece shows a tiny network learning, this one shows a transformer reading.',
+          'A tiny character-level GPT, trained from scratch on Shakespeare (tiny-shakespeare, from Andrej Karpathy’s char-rnn), running entirely in the browser. The letters you type sit along the bottom and four layers stack above them. Each glowing arc is a letter looking back at an earlier one, brighter the harder it looks, and the top row is the model’s guess at what comes next. It follows micrograd 3D: that piece shows a tiny network learning, this one shows a transformer reading.',
         ],
       },
       {
         heading: 'How',
         body: [
-          'nanoGPT’s design, scaled down to 809,856 parameters: 4 layers, 4 heads, 64 characters of context. PyTorch could not be installed, so it is written in pure NumPy with a hand-derived backward pass, checked against finite differences, and trained in 32 minutes on 2 CPU cores to a validation loss of 1.53.',
+          'Andrej Karpathy’s nanoGPT design, scaled down to 809,856 parameters: 4 layers, 4 heads, 64 characters of context. PyTorch could not be installed, so it is written in pure NumPy with a hand-written backward pass (no autograd), checked against finite differences, and trained in 32 minutes on 2 CPU cores to a validation loss of 1.53.',
           'The weights ship as int8 inside the page. The forward pass runs in a Web Worker so the 3D view never waits, and every arc is one ribbon in a single mesh, its width set on the GPU.',
         ],
       },
@@ -165,20 +165,20 @@ export const works: Work[] = [
     extra: {
       src: noiseMid,
       alt: 'A loose cloud of faint cyan points with short trails, only the rough outline of the knot showing.',
-      caption: 't = 20: still mostly noise. Under the cosine schedule the knot appears only in the last ten or so of the hundred steps.',
+      caption: 't = 20: still mostly noise. Under the cosine schedule the knot appears only in the last 10–15 of the hundred steps.',
     },
     sections: [
       {
         heading: 'What',
         body: [
-          'A tiny diffusion model, trained from scratch, running entirely in the browser. It starts with 4,000 points of pure Gaussian noise and moves them, step by step, into a trefoil knot, in 3D. Scrub from noise to knot, re-noise it and watch the model draw a new one, or turn on the field to see which way the network pushes each point.',
+          'A tiny diffusion model, trained from scratch, running entirely in the browser. It starts with 4,000 points of pure Gaussian noise and moves them, step by step, into a trefoil knot, in 3D. Scrub from noise to knot, re-noise it and watch the model draw a new one, or turn on Guess to see, for every point, the network’s estimate of the clean point it came from.',
         ],
       },
       {
         heading: 'How',
         body: [
-          'A DDPM with 100 steps and a cosine schedule. The network, a 42,627-parameter MLP, learns one thing: look at a noisy point and predict the noise that was added. It is written in NumPy with a hand-written backward pass, checked against finite differences, and trained in 23 minutes on 2 CPU cores.',
-          'The weights ship as float16 inside a 150 kB page, and the reverse process runs in Web Workers. Measured on those shipped weights, the median sample lands 0.027 from the knot’s centre line, and no part of the knot is left uncovered.',
+          'A DDPM (Ho, Jain & Abbeel 2020) with 100 steps and the cosine schedule of Nichol & Dhariwal (2021), sampled with DDIM (Song, Meng & Ermon 2020). The network, a 42,627-parameter MLP, learns one thing: look at a noisy point and predict the noise that was added. It is written in NumPy with a hand-written backward pass, checked against finite differences, and trained in 23 minutes on 2 CPU cores.',
+          'The weights ship as float16 inside a page of about 160 kB, and the reverse process runs in Web Workers. Measured on those shipped weights, the median sample lands 0.027 from the knot’s centre line, and no part of the knot is left uncovered.',
         ],
       },
       {
@@ -214,7 +214,7 @@ export const works: Work[] = [
       {
         heading: 'What',
         body: [
-          'A multi-scale 3D viewer that runs in the browser. One autumn maple leaf at five scales, each ten times finer than the last: the leaf, its veins, the areoles, the pavement cells and a single stoma, 4.5 orders of magnitude to scroll or pinch through. It implements the scale-aware opacity modulation of WonderZoom (Jin Cao, Hong-Xing Yu and Jiajun Wu, Multi-Scale 3D World Generation, CVPR 2026): every surfel remembers the scale it was made at and fades, in log scale, as you move away from it. A toggle turns modulation off, so you can see what the method prevents.',
+          'A multi-scale 3D viewer that runs in the browser. One autumn maple leaf at five scales, each ten times finer than the last: the leaf, its veins, the areoles, the pavement cells and a single stoma, 4.5 orders of magnitude to scroll or pinch through. It implements the scale-aware opacity modulation of WonderZoom (Jin Cao, Hong-Xing Yu and Jiajun Wu, WonderZoom: Multi-Scale 3D World Generation, arXiv 2512.09164, 2025): every surfel remembers the scale it was made at and fades, in log scale, as you move away from it. A toggle turns modulation off, so you can see what the method prevents.',
         ],
       },
       {
@@ -261,7 +261,7 @@ export const works: Work[] = [
       {
         heading: 'What',
         body: [
-          'An original story you walk through in the browser, with headphones, in about three minutes. Five people are left. Something keeps them: every night it rebuilds the world from what they remember, almost perfectly.',
+          'A story you walk through in the browser, with headphones, in about three minutes, inspired by Harlan Ellison’s short story I Have No Mouth, and I Must Scream (1967). Five people are left. Something keeps them: every night it rebuilds the world from what they remember, almost perfectly.',
         ],
       },
       {

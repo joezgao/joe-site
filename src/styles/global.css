@@ -196,3 +196,18 @@ ol {
     navigation: none;
   }
 }
+
+/* "[Joe to confirm]" markers in draft essays (src/plugins/remark-confirm.mjs). */
+mark.confirm {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--muted);
+  background: none;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 8px;
+  vertical-align: 0.15em;
+}

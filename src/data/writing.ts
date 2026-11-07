@@ -24,3 +24,11 @@ export const essayHref = (e: Essay) => `/writing/${e.id}`;
 
 /** Whole minutes at ~230 words a minute. */
 export const readingMinutes = (e: Essay) => Math.max(1, Math.round((e.body ?? '').split(/\s+/).length / 230));
+
+const CONFIRM = '[Joe to confirm]';
+/**
+ * The essay's rendered HTML with the vault's editorial marker "[Joe to confirm]" shown as a small tag,
+ * so a draft shows Joe which lines wait for his approval. The Markdown stays a verbatim copy of the vault.
+ */
+export const essayHtml = (e: Essay): string | undefined =>
+  e.rendered?.html.replaceAll(CONFIRM, '<mark class="confirm">Joe to confirm</mark>');
