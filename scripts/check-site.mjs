@@ -36,6 +36,13 @@ for (const [route, path] of Object.entries(byRoute)) {
     if (!routes.includes(target) && !existsSync(join(dist, href))) errors.push(`${route}: link to unknown page ${href}`);
   }
   if (/lorem|TODO|placeholder/i.test(html.replace(/<style[\s\S]*?<\/style>/g, ''))) errors.push(`${route}: placeholder text`);
+  // Credit rule (vault 规则详解 § 作品署名): every page, and every piece on Work, says it.
+  const credits = (html.match(/built with Claude for Joe Gao/g) ?? []).length;
+  if (credits < 1) errors.push(`${route}: no "built with Claude for Joe Gao" credit`);
+  if (route === '/work') {
+    const pieces = (html.match(/<article\b/g) ?? []).length;
+    if (credits < pieces + 1) errors.push(`/work: ${pieces} pieces but only ${credits} credit lines (want one per piece + footer)`);
+  }
 }
 
 if (errors.length) {

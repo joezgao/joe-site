@@ -68,7 +68,10 @@ const nav = [
     </main>
 
     <footer class="wrap site-footer">
-      <p class="label">© 2026 Joe Gao</p>
+      <div class="foot-left">
+        <p class="label">© 2026 Joe Gao</p>
+        <p class="label credit">built with Claude for Joe Gao</p>
+      </div>
       <button class="label theme" type="button" aria-label="Switch colour theme">
         <span class="theme-name">Theme</span>
       </button>
@@ -147,10 +150,19 @@ const nav = [
     color: var(--text);
   }
 
+  .foot-left {
+    display: grid;
+    gap: 4px;
+  }
+  .foot-left .label {
+    white-space: nowrap;
+  }
   .site-footer {
     display: flex;
+    flex-wrap: wrap; /* on phones the toggle takes its own line instead of squeezing the credit */
     justify-content: space-between;
     align-items: center;
+    gap: 8px 24px;
     padding-block: 48px;
     margin-top: 96px;
     /* hairline spans the content column, not the gutters */
@@ -158,6 +170,8 @@ const nav = [
       no-repeat;
   }
   .theme {
+    margin-left: auto;
+    white-space: nowrap;
     background: none;
     border: 0;
     padding: 0 0 0 16px;

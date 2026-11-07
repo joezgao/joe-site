@@ -40,4 +40,4 @@ Not deployed yet. The Writing section is a draft until its first-person lines ar
 
 The code is MIT. See [LICENSE](LICENSE). The writing, images and owl mark are © Joe Gao, all rights reserved. Geist is under the SIL Open Font License.
 
-Built with Claude.
+Built with Claude for Joe Gao.
