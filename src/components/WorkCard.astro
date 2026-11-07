@@ -1,6 +1,7 @@
 ---
 // One work on Home: still, title, tagline, meta. `kicker` is the trilogy part ("I · Learns").
 import { Picture } from 'astro:assets';
+import LoopVideo from './LoopVideo.astro';
 import type { Work } from '../data/works';
 
 interface Props {
@@ -14,7 +15,13 @@ const { work: w, kicker, widths, sizes } = Astro.props;
 ---
 
 <a class="card" href={`/work#${w.id}`}>
-  <Picture src={w.cover.src} alt={w.cover.alt} formats={['avif', 'webp']} widths={widths} sizes={sizes} class="still" />
+  {
+    w.loop ? (
+      <LoopVideo src={w.loop.src} poster={w.loop.poster} label={w.loop.label} class="still" />
+    ) : (
+      <Picture src={w.cover.src} alt={w.cover.alt} formats={['avif', 'webp']} widths={widths} sizes={sizes} class="still" />
+    )
+  }
   {kicker && <span class="label kicker">{kicker}</span>}
   <span class="card-title">{w.title}</span>
   <span class="card-line">{w.tagline}</span>
@@ -34,7 +41,8 @@ const { work: w, kicker, widths, sizes } = Astro.props;
     filter: var(--still-rest);
     transition: filter 400ms var(--ease);
     width: 100%;
-    aspect-ratio: var(--still-ratio, 16 / 10);
+    height: auto; /* <video height="720"> would otherwise fix the height and ignore aspect-ratio */
+    aspect-ratio: var(--still-ratio, 16 / 9); /* the loops are 16:9 with titles near the edges: never crop them */
     object-fit: cover;
     border-radius: 4px;
     background: var(--surface);

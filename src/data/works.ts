@@ -27,6 +27,10 @@ import noiseKnot from '../assets/noise-knot.png';
 import noiseMid from '../assets/noise-mid.png';
 import atwdLeaf from '../assets/atwd-leaf.png';
 import atwdStoma from '../assets/atwd-stoma.png';
+import almostRipePoster from '../assets/loops/almost-ripe-poster.png';
+import attentionPoster from '../assets/loops/attention-poster.png';
+import noisePoster from '../assets/loops/noise-undone-poster.png';
+import atwdPoster from '../assets/loops/all-the-way-down-poster.png';
 
 export interface Work {
   id: string;
@@ -41,6 +45,8 @@ export interface Work {
   section?: 'research';
   cover: { src: ImageMetadata; alt: string; caption: string };
   extra?: { src: ImageMetadata; alt: string; caption: string };
+  /** A short silent loop shown instead of the cover still (cards and the Work cover). Video in public/loops/. */
+  loop?: { src: string; poster: ImageMetadata; label: string };
   sections: { heading: string; body: string[] }[];
 }
 
@@ -106,6 +112,7 @@ export const works: Work[] = [
     tools: 'NumPy · three.js · Web Workers',
     status: 'Finished, private for now',
     live: false,
+    loop: { src: '/loops/attention.mp4', poster: attentionPoster, label: 'Golden arcs of attention rising between letters across four layers while the model reads and writes.' },
     series: { part: 2, verb: 'Thinks' },
     cover: {
       src: attentionHead,
@@ -148,6 +155,7 @@ export const works: Work[] = [
     tools: 'NumPy · three.js · Web Workers',
     status: 'Finished, private for now',
     live: false,
+    loop: { src: '/loops/noise-undone.mp4', poster: noisePoster, label: 'Thousands of cyan points gathering out of noise into a trefoil knot, then dissolving back into noise.' },
     series: { part: 3, verb: 'Creates' },
     cover: {
       src: noiseKnot,
@@ -190,6 +198,7 @@ export const works: Work[] = [
     tools: 'WebGL · three.js · Web Workers',
     status: 'Finished',
     live: false,
+    loop: { src: '/loops/all-the-way-down.mp4', poster: atwdPoster, label: 'A zoom through an autumn maple leaf, from the whole leaf down to a single stoma between its guard cells.' },
     section: 'research',
     cover: {
       src: atwdLeaf,
@@ -237,6 +246,7 @@ export const works: Work[] = [
     tools: 'three.js · Web Audio API · Claude',
     status: 'Finished, private for now',
     live: false,
+    loop: { src: '/loops/almost-ripe.mp4', poster: almostRipePoster, label: 'A lone apple tree on a hill of golden grass; the world breaks into triangles and opens onto a dark corridor of blinking lights.' },
     cover: {
       src: almostRipeTower,
       alt: 'A dark monolithic tower under a moonlit, cloudy sky, a thin beam of light sweeping from its top. Two choices float above a small figure: “look away” and “keep walking”.',
