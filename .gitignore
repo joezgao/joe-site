@@ -27,3 +27,10 @@ pnpm-debug.log*
 .env.*
 .claude/settings.local.json
 .claude/worktrees/
+
+# Private working files: kept locally, never published
+SPEC.md
+CLAUDE.md
+.factory/
+.claude/
+src/content/writing/*.md
