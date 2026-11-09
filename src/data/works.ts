@@ -53,6 +53,8 @@ export interface Work {
   live: boolean; // something is happening right now (gets the one point of light)
   /** The work's public repository (all under github.com/joezgao since 2026-11-09). */
   code: string;
+  /** The live demo on GitHub Pages, when there is one. */
+  demo?: string;
   series?: { part: 1 | 2 | 3; verb: 'Learns' | 'Thinks' | 'Creates' }; // the trilogy
   section?: 'research';
   /** Research works: what the study looks at, e.g. "How AI sees scale". */
@@ -78,12 +80,13 @@ export const works: Work[] = [
   {
     id: 'micrograd-3d',
     code: 'https://github.com/joezgao/micrograd-3d',
+    demo: 'https://joezgao.github.io/micrograd-3d/',
     title: 'micrograd 3D',
     tagline: 'Watch a tiny neural network learn, one gradient at a time.',
     year: '2026',
     form: 'Interactive, in the browser',
     tools: 'TypeScript · React Three Fiber',
-    status: 'v1.1 runs locally',
+    status: 'v1.1, live in the browser',
     live: false,
     series: { part: 1, verb: 'Learns' },
     cover: {
@@ -121,6 +124,7 @@ export const works: Work[] = [
   {
     id: 'attention',
     code: 'https://github.com/joezgao/attention-in-space',
+    demo: 'https://joezgao.github.io/attention-in-space/attention.html',
     title: 'Attention, in space',
     tagline: 'Watch a tiny GPT read, in 3D, while you type.',
     year: '2026',
@@ -165,6 +169,7 @@ export const works: Work[] = [
   {
     id: 'noise-undone',
     code: 'https://github.com/joezgao/noise-undone',
+    demo: 'https://joezgao.github.io/noise-undone/noise-undone.html',
     title: 'Noise, undone',
     tagline: 'Watch 4,000 points of noise become a knot.',
     year: '2026',
@@ -210,6 +215,7 @@ export const works: Work[] = [
   {
     id: 'all-the-way-down',
     code: 'https://github.com/joezgao/all-the-way-down',
+    demo: 'https://joezgao.github.io/all-the-way-down/all-the-way-down.html',
     title: 'All the way down',
     tagline: 'One maple leaf, from the whole leaf down to a single stoma.',
     year: '2026',
@@ -260,6 +266,7 @@ export const works: Work[] = [
   {
     id: 'seen-from-twelve-sides',
     code: 'https://github.com/joezgao/seen-from-twelve-sides',
+    demo: 'https://joezgao.github.io/seen-from-twelve-sides/seen-from-twelve-sides.html',
     title: 'Seen from twelve sides',
     tagline: 'Twelve photographs of a stone become 4,000 Gaussians.',
     year: '2026',
@@ -310,6 +317,7 @@ export const works: Work[] = [
   {
     id: 'how-a-model-reads',
     code: 'https://github.com/joezgao/how-a-model-reads',
+    demo: 'https://joezgao.github.io/how-a-model-reads/how-a-model-reads.html',
     title: 'How a model reads',
     tagline: 'Watch text break into tokens, merge by merge.',
     year: '2026',
@@ -360,6 +368,7 @@ export const works: Work[] = [
   {
     id: 'where-words-live',
     code: 'https://github.com/joezgao/where-words-live',
+    demo: 'https://joezgao.github.io/where-words-live/',
     title: 'Where words live',
     tagline: 'Three thousand Shakespeare words, placed by the company they keep.',
     year: '2026',
@@ -410,6 +419,7 @@ export const works: Work[] = [
   {
     id: 'karesansui',
     code: 'https://github.com/joezgao/karesansui',
+    demo: 'https://joezgao.github.io/karesansui/karesansui.html',
     title: 'Karesansui 枯山水',
     tagline: 'A dry Zen garden whose rake lines are the level lines of a field.',
     year: '2026',
@@ -460,6 +470,7 @@ export const works: Work[] = [
   {
     id: 'heptapod',
     code: 'https://github.com/joezgao/heptapod',
+    demo: 'https://joezgao.github.io/heptapod/',
     title: 'Heptapod',
     tagline: 'Can a language model write a whole passage at once?',
     year: '2026',
@@ -509,6 +520,7 @@ export const works: Work[] = [
   {
     id: 'almost-ripe',
     code: 'https://github.com/joezgao/almost-ripe',
+    demo: 'https://joezgao.github.io/almost-ripe/almost-ripe.html',
     title: 'Almost Ripe',
     tagline: 'A night inside the Caretaker.',
     year: '2026',
