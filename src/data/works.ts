@@ -35,6 +35,8 @@ import twelveCameras from '../assets/twelve-cameras.png';
 import twelveHeldout from '../assets/twelve-heldout.png';
 import reads2000 from '../assets/reads-2000.png';
 import reads12 from '../assets/reads-12.png';
+import heptapodRing from '../assets/heptapod-ring.png';
+import heptapodCompare from '../assets/heptapod-compare.png';
 
 export interface Work {
   id: string;
@@ -339,6 +341,54 @@ export const works: Work[] = [
         heading: 'Next',
         body: [
           'The vocabulary is shaped by the script format: speaker names in capitals take merges that modern text never uses, and modern words fall apart (smartphone becomes s m art p h one). Characters never seen in training stay single, where a byte-level tokenizer would merge their bytes.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'heptapod',
+    title: 'Heptapod',
+    tagline: 'Can a language model write a whole passage at once?',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'PyTorch · JavaScript',
+    status: 'Finished',
+    live: false,
+    section: 'research',
+    question: 'How AI writes',
+    cover: {
+      src: heptapodRing,
+      alt: 'A ring of pale brush strokes on black, one per letter, with the same passage printed small around the inside of the ring and as lines of Shakespeare-like text in the middle.',
+      caption: 'The diffusion model’s passage after 32 passes (seed 1): every letter written around the circle, some still misspelled.',
+    },
+    extra: {
+      src: heptapodCompare,
+      alt: 'The finished ring on the left; on the right, the GPT twin halfway through the same length, its strokes filling rows from the top while the rest are still dots.',
+      caption: 'Compare: the GPT twin at pass 121 of 255. The diffusion model finished at pass 32.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A tiny diffusion language model starts from 255 blanks and fills them in everywhere over a few passes, drawing each letter as a brush stroke around a circle and sometimes taking a letter back. Beside it, a GPT of exactly the same size, trained on the same text in the same way, writes the same length one letter at a time. Both were trained from scratch on tiny-shakespeare and run live in the browser in plain JavaScript.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'Both networks are four transformer blocks, 128 wide, 829,952 parameters each. The diffusion model’s attention runs both ways and it is trained to fill in a random share of masked letters, as in MDLM and SEDD; the GPT’s attention is causal and it predicts the next letter. Each pass of the diffusion model keeps a random set of its proposed letters; an optional remasking step, after ReMDM, sends a few of the least confident ones back to blank. The browser’s forward pass matches PyTorch to within 1.9e-5 on 20 fixed inputs per model.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'Real words, over 50 seeds: 65.1% for the diffusion model at 32 passes with remasking, 73.0% at 128 passes, against 97.2% for the GPT. Keeping the most confident letters first, LLaDA’s order, made it write “you you you” around the ring: 87% real words but only 29% distinct. On a CPU the GPT finishes first: 154 ms for 255 letters against 3.39 s for 32 diffusion passes, because each diffusion pass reads all 256 positions.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'Both models are under a million parameters with 256 letters of context: they get Shakespeare’s shape, not its sense. The GPT had stopped improving by step 13,000 of 20,000 while the diffusion model was still creeping down, so equal steps are not each model at its best. Not yet checked in Safari or Firefox, or for speed on a real phone.',
         ],
       },
     ],
