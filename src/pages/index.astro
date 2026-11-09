@@ -3,18 +3,14 @@ import Base from '../layouts/Base.astro';
 import Owl from '../components/Owl.astro';
 import WorkCard from '../components/WorkCard.astro';
 import EssayLink from '../components/EssayLink.astro';
-import { works, trilogy, research, isSeries, isResearch, seriesLabel } from '../data/works';
+import { works, trilogy, isSeries, seriesLabel } from '../data/works';
 import { essaysByWork } from '../data/writing';
 
 const essays = await essaysByWork();
 
 const series = works.filter(isSeries).sort((a, b) => a.series.part - b.series.part);
-const researchWorks = works.filter(isResearch);
-const rest = works.filter((w) => !isSeries(w) && !isResearch(w));
-// Groups pair up in two columns; with an odd count the first is featured full width so none is left alone.
-const featuredIn = (group: unknown[]) => (i: number) => i === 0 && group.length % 2 === 1;
-const featured = featuredIn(rest);
-const researchFeatured = featuredIn(researchWorks);
+// Home shows the trilogy only (DESIGN.md: 3–5 projects; Joe 11/9 chose three); everything else is one link to Work.
+const others = works.length - series.length;
 ---
 
 <Base description="Joe Gao builds things with AI and cares how they feel. Stanford, computer science and AI.">
@@ -50,9 +46,9 @@ const researchFeatured = featuredIn(researchWorks);
   }
 
   {
-    researchWorks.length + rest.length > 0 && (
+    others > 0 && (
       <p class="wrap more">
-        <a href="/work/">{researchWorks.length + rest.length} more on Work: research and stories</a>
+        <a href="/work/">{others} more on Work: research and stories</a>
       </p>
     )
   }
@@ -89,12 +85,6 @@ const researchFeatured = featuredIn(researchWorks);
   .triptych {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-  .pairs {
-    grid-template-columns: 1fr 1fr;
-  }
-  .featured {
-    grid-column: 1 / -1;
-  }
 
   @media (max-width: 960px) {
     .triptych {
@@ -107,13 +97,6 @@ const researchFeatured = featuredIn(researchWorks);
       grid-template-columns: 1fr;
       gap: 32px;
       padding-block: 24px 56px;
-    }
-    .pairs {
-      grid-template-columns: 1fr;
-      gap: 56px;
-    }
-    .works + .works {
-      margin-top: 88px;
     }
   }
 </style>
