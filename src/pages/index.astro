@@ -50,58 +50,19 @@ const researchFeatured = featuredIn(researchWorks);
   }
 
   {
-    researchWorks.length > 0 && (
-      <section class="wrap works" aria-labelledby="research-heading">
-        <h2 id="research-heading" class="label">
-          {research.title}
-        </h2>
-        <ul class="pairs">
-          {researchWorks.map((w, i) => (
-            <li class:list={[{ featured: researchFeatured(i) }]}>
-              <WorkCard
-                work={w}
-                kicker={w.question}
-                widths={researchFeatured(i) ? [640, 1024, 1600, 2240] : [480, 720, 1080]}
-                sizes={
-                  researchFeatured(i)
-                    ? '(min-width: 1248px) 1120px, calc(100vw - 2 * clamp(20px, 5vw, 64px))'
-                    : '(min-width: 800px) 544px, calc(100vw - 40px)'
-                }
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
-    )
-  }
-
-  {
-    rest.length > 0 && (
-      <section class="wrap works" aria-labelledby="stories-heading">
-        <h2 id="stories-heading" class="label">
-          Stories
-        </h2>
-        <ul class="pairs">
-          {rest.map((w, i) => (
-            <li class:list={[{ featured: featured(i) }]}>
-              <WorkCard
-                work={w}
-                widths={featured(i) ? [640, 1024, 1600, 2240] : [480, 720, 1080]}
-                sizes={
-                  featured(i)
-                    ? '(min-width: 1248px) 1120px, calc(100vw - 2 * clamp(20px, 5vw, 64px))'
-                    : '(min-width: 800px) 544px, calc(100vw - 40px)'
-                }
-              />
-            </li>
-          ))}
-        </ul>
-      </section>
+    researchWorks.length + rest.length > 0 && (
+      <p class="wrap more">
+        <a href="/work/">{researchWorks.length + rest.length} more on Work: research and stories</a>
+      </p>
     )
   }
 </Base>
 
 <style>
+  .more {
+    padding-block: 56px 128px;
+    color: var(--muted);
+  }
   .hero {
     display: grid;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
