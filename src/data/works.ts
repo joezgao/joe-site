@@ -37,6 +37,8 @@ import reads2000 from '../assets/reads-2000.png';
 import reads12 from '../assets/reads-12.png';
 import wordsPoster from '../assets/loops/where-words-live-poster.png';
 import wordsRomeo from '../assets/words-romeo.png';
+import karesansuiPoster from '../assets/loops/karesansui-poster.png';
+import karesansuiGhost from '../assets/karesansui-ghost.png';
 import heptapodRing from '../assets/heptapod-ring.png';
 import heptapodCompare from '../assets/heptapod-compare.png';
 
@@ -392,6 +394,55 @@ export const works: Work[] = [
         heading: 'Next',
         body: [
           'A 194,000-word corpus is tiny: the geometry reflects which play a word comes from about as much as what it means, and removing 81 header tokens between runs changed most mid-frequency lists. Seed-to-seed variation was not measured.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'karesansui',
+    title: 'Karesansui 枯山水',
+    tagline: 'A dry Zen garden whose rake lines are the level lines of a field.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'three.js · GLSL',
+    status: 'Finished',
+    live: false,
+    loop: { src: '/loops/karesansui.mp4', poster: karesansuiPoster, label: 'Raked white gravel flowing around three dark stones on moss islands, being raked again stroke by stroke.' },
+    section: 'research',
+    question: 'How a field rakes a garden',
+    cover: {
+      src: karesansuiPoster,
+      alt: 'White gravel raked in fine parallel lines that bend around three groups of dark stones on moss islands, with rings around each island and long shadows from a low sun.',
+      caption: 'Mid re-rake, stroke 18 of 21: the lines bend around each stone and close into rings near it.',
+    },
+    extra: {
+      src: karesansuiGhost,
+      alt: 'The garden after a stone was removed: rings still circle an empty, flat oval of gravel where its moss island used to be.',
+      caption: 'The gravel remembers: a removed stone leaves rings around nothing until the monk rakes there.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A dry Zen garden in the browser: raked white gravel, a few dark stones on moss islands, low dawn light. Tap the gravel to set a stone, drag a stone to move it, double-tap to take it away. When something changes, an unseen monk re-rakes the garden one stroke at a time, about 20 to 25 strokes after one change.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'The rake lines are not drawn. Near each island they are rings of its signed distance, blended with a smooth minimum so close stones share one peanut-shaped set of ripples; farther out they are a stream function, straight lines bent by flow round a cylinder at each stone. The gravel’s height lives in a texture that only a stroke can change, so a moved stone leaves a ghost until the monk reaches it. The stones are procedural too: spheres cut by 16 to 22 random planes, with rounded edges.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'Nothing is drawn unless something changed; an idle garden draws one frame a second. On an Apple M5 Pro, a frame while the monk rakes took 2.27 ms at 1440 × 900 and 1.8 ms at phone size, timed pass by pass.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'The flow is a blend of single-stone flows, not an exact solution for several stones, so lines squeeze against the long walls when a stone sits close to one. Not yet measured as a live frame rate or on a phone GPU. The stones come from presets and seeds: they read as stones, but no one composed them.',
         ],
       },
     ],
