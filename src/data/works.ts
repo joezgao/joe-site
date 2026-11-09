@@ -1,10 +1,9 @@
-// The site's list of works. Home and Work render whatever is here, in this order.
-// Home pairs them in two columns; with an odd count the first is featured full width.
+// The site's list of works. Work renders all of them, in this order; Home shows only the trilogy and links to Work.
 // Case-study copy comes from each project's own material: SPEC.md + README.md for micrograd 3D
 // (the micrograd-3d repo); the piece itself for Almost Ripe; README.md for the others
 // (each in its own repo).
-// Works with a `series` belong to the trilogy (how AI learns, thinks, creates); Home shows them first,
-// side by side as a triptych. Works with `section: 'research'` follow under "Research · How AI sees scale",
+// Works with a `series` belong to the trilogy (how AI learns, thinks, creates); Home shows them side by side
+// as a triptych, and Work shows them first. On Work, works with `section: 'research'` follow under "Research",
 // then the rest ("Stories").
 // Keep it factual: no claims that the specs, commits, renders or the piece don't back up.
 //
