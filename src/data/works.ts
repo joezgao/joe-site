@@ -332,7 +332,7 @@ export const works: Work[] = [
       {
         heading: 'How',
         body: [
-          'The merge loop of Sennrich, Haddow & Birch (2016), on Philip Gage’s pair-replacement idea (1994), with a GPT-2-style pre-split that keeps a word’s leading space and never merges across words. It starts from the 65 characters in the text, not from bytes. 2,000 merges over 1,115,394 characters take about 3 seconds. The page encodes with the same earliest-merge-first rule; a test runs 3,444 cases through the shipped page, and all 3,444 match the Python reference exactly.',
+          'The merge loop of Sennrich, Haddow & Birch (2016), on Philip Gage’s pair-replacement idea (1994), with a GPT-2-style pre-split that keeps a word’s leading space and never merges across words. It starts from the 65 characters in the text, not from bytes. 2,000 merges over 1,115,394 characters take a few seconds in plain Python. The page encodes with the same earliest-merge-first rule; a test runs 3,444 cases through the shipped page, and all 3,444 match the Python reference exactly.',
         ],
       },
       {
@@ -484,7 +484,7 @@ export const works: Work[] = [
       {
         heading: 'Measured',
         body: [
-          'Real words, over 50 seeds: 65.1% for the diffusion model at 32 passes with remasking, 73.0% at 128 passes, against 97.2% for the GPT. Keeping the most confident letters first, LLaDA’s order, made it write “you you you” around the ring: 87% real words but only 29% distinct. On a CPU the GPT finishes first: 154 ms for 255 letters against 3.39 s for 32 diffusion passes, because each diffusion pass reads all 256 positions.',
+          'Real words, over 50 seeds: 65.1% for the diffusion model at 32 passes with remasking, 73.0% at 128 passes, against 97.2% for the GPT. Keeping the most confident letters first, LLaDA’s order, made it write “you you you” around the ring: 87% real words but only 29% distinct. On a CPU the GPT finishes first: in Node on an Apple M5 Pro, 154 ms for 255 letters against 3.39 s for 32 diffusion passes, because each diffusion pass reads all 256 positions.',
         ],
       },
       {
