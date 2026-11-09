@@ -35,6 +35,8 @@ import twelveCameras from '../assets/twelve-cameras.png';
 import twelveHeldout from '../assets/twelve-heldout.png';
 import reads2000 from '../assets/reads-2000.png';
 import reads12 from '../assets/reads-12.png';
+import wordsPoster from '../assets/loops/where-words-live-poster.png';
+import wordsRomeo from '../assets/words-romeo.png';
 import heptapodRing from '../assets/heptapod-ring.png';
 import heptapodCompare from '../assets/heptapod-compare.png';
 
@@ -341,6 +343,55 @@ export const works: Work[] = [
         heading: 'Next',
         body: [
           'The vocabulary is shaped by the script format: speaker names in capitals take merges that modern text never uses, and modern words fall apart (smartphone becomes s m art p h one). Characters never seen in training stay single, where a byte-level tokenizer would merge their bytes.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'where-words-live',
+    title: 'Where words live',
+    tagline: 'Three thousand Shakespeare words, placed by the company they keep.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'NumPy · three.js',
+    status: 'Finished',
+    live: false,
+    loop: { src: '/loops/where-words-live.mp4', poster: wordsPoster, label: 'A cloud of word points in 3D; one word lights up with lines to its ten nearest neighbours, then another.' },
+    section: 'research',
+    question: 'How AI relates words',
+    cover: {
+      src: wordsPoster,
+      alt: 'A dark cloud of small points with the word king highlighted in violet, lines running to claim, lewis, dukedom, lawful, plantagenet, richard and harry, and the ten neighbours listed with their cosine values on the left.',
+      caption: 'king and its ten nearest neighbours, measured in all 48 dimensions: claim .76, lewis .75, dukedom .73.',
+    },
+    extra: {
+      src: wordsRomeo,
+      alt: 'The same cloud with romeo selected: lines run to tybalt, juliet, banished, mercutio, conjure, arise and murderer, some of them long.',
+      caption: 'romeo: tybalt .79, juliet .74, banished .72. Long lines are words close in 48 dimensions but far apart in this 3D shadow.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'Skip-gram word2vec with negative sampling, trained from scratch in NumPy on tiny-shakespeare. The 3,000 most common words are points in 3D. Pick a word, by clicking, searching or tapping a chip, to see its ten nearest neighbours with their cosine values, joined to it by lines.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'Two 3,000 × 48 matrices trained on 193,931 words for 15 passes, with the original word2vec recipe: five negatives drawn from unigram^0.75, sub-sampling of frequent words, a dynamic window up to 5. The gradients are written by hand and checked against finite differences (largest relative error 1.2e-9). Neighbours are computed in the browser with cosine similarity in all 48 dimensions; the 3D view is a PCA projection that keeps only 26.2% of the variance, so it is a shadow.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'The 20 probe words and 8 analogies were written down before the first training run and never changed. Some neighbour lists are good (romeo, thou, king), some mostly noise (man, woman). Analogies: 2 of 8 hit, both function words (his → her, thy → your); king − man + woman puts queen 28th. Four of the six PCA axis ends lean toward a single play, above the 99th percentile of random word groups.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'A 194,000-word corpus is tiny: the geometry reflects which play a word comes from about as much as what it means, and removing 81 header tokens between runs changed most mid-frequency lists. Seed-to-seed variation was not measured.',
         ],
       },
     ],
