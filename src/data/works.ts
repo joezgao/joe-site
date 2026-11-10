@@ -139,7 +139,7 @@ export const works: Work[] = [
     cover: {
       src: attentionHead,
       alt: 'Letters of a line of text along the bottom and four layers above them; in layer 2 a bright golden fan of arcs sweeps from one letter back across the earlier ones.',
-      caption: 'Layer 2, head 3: a word-boundary head, looking back to the last space or line break.',
+      caption: 'Layer 2, head 3: every later letter looks back to the last line break.',
     },
     extra: {
       src: attentionAll,
@@ -157,7 +157,7 @@ export const works: Work[] = [
         heading: 'How',
         body: [
           'Andrej Karpathy’s nanoGPT design, scaled down to 809,856 parameters: 4 layers, 4 heads, 64 characters of context. PyTorch could not be installed, so it is written in pure NumPy with a hand-written backward pass (no autograd), checked against finite differences, and trained in 32 minutes on 2 CPU cores to a validation loss of 1.53.',
-          'The weights ship as int8 inside the page. The forward pass runs in a Web Worker so the 3D view never waits, and every arc is one ribbon in a single mesh, its width set on the GPU.',
+          'The weights ship as int8 in attention.js, loaded after the page paints. The forward pass runs in a Web Worker so the 3D view never waits, and every arc is one ribbon in a single mesh, its width set on the GPU.',
         ],
       },
       {
