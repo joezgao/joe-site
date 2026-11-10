@@ -111,14 +111,14 @@ export const works: Work[] = [
       {
         heading: 'How',
         body: [
-          'A 2 → 8 → 8 → 1 network learns the two-moons dataset with hinge loss and plain gradient descent. Every neuron is a sphere and every one of its 88 weights is a line. A line glows warm in proportion to the gradient backprop just sent through it, so you see where learning flows rather than what the weights are.',
-          'Beside it, the decision boundary bends through the data and a loss curve falls on a log scale. Play, pause, step, or run it at up to 120 steps a second. Pause at any moment to step through one point’s backward pass, neuron by neuron, with the chain rule written out. Tests check the gradients against values worked out by hand and against finite differences.',
+          'A 2 → 8 → 8 → 1 network learns the two-moons dataset with hinge loss and plain gradient descent. Every neuron is a sphere and every one of its 88 weights is a line. A line glows warmer the larger the gradient backprop just sent through it (the largest few light up most), so you see where learning flows rather than what the weights are.',
+          'Beside it, the decision boundary bends through the data and a loss curve falls on a log scale. Play, pause, step, or run it at up to 60 steps a second. Pause at any moment to step through one point’s backward pass, neuron by neuron, with the chain rule written out. Tests check the gradients against values worked out by hand and against finite differences.',
         ],
       },
       {
         heading: 'Next',
         body: [
-          'A public demo.',
+          'A toy problem on purpose: scalar autograd suits 88 weights and 100 points, not real datasets, and the accuracy shown is on the same 100 points it trains on, with no held-out set.',
         ],
       },
     ],
