@@ -242,7 +242,7 @@ export const works: Work[] = [
       {
         heading: 'What',
         body: [
-          'A multi-scale 3D viewer that runs in the browser. One autumn maple leaf at five scales, each ten times finer than the last: the leaf, its veins, the areoles, the pavement cells and a single stoma, 4.5 orders of magnitude to scroll or pinch through. It implements the scale-aware opacity modulation of WonderZoom (Jin Cao, Hong-Xing Yu and Jiajun Wu, WonderZoom: Multi-Scale 3D World Generation, arXiv 2512.09164, 2025): every surfel remembers the scale it was made at and fades, in log scale, as you move away from it. A toggle turns modulation off, so you can see what the method prevents.',
+          'A multi-scale 3D viewer that runs in the browser. One autumn maple leaf at five scales, each ten times finer than the last: the leaf, its veins, the areoles, the pavement cells and a single stoma, four orders of magnitude (10,000×) to scroll or pinch through. It implements the scale-aware opacity modulation of WonderZoom (Jin Cao, Hong-Xing Yu and Jiajun Wu, WonderZoom: Multi-Scale 3D World Generation, arXiv 2512.09164, 2025): every surfel remembers the scale it was made at and fades, in log scale, as you move away from it. A toggle turns modulation off, so you can see what the method prevents.',
         ],
       },
       {
