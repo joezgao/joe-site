@@ -37,6 +37,9 @@ import reads12 from '../assets/reads-12.png';
 import wordsPoster from '../assets/loops/where-words-live-poster.png';
 import wordsRomeo from '../assets/words-romeo.png';
 import karesansuiPoster from '../assets/loops/karesansui-poster.png';
+import firstStepsPoster from '../assets/loops/first-steps-poster.png';
+import firstStepsTrained from '../assets/first-steps-trained.png';
+import firstStepsPit from '../assets/first-steps-pit.png';
 import karesansuiGhost from '../assets/karesansui-ghost.png';
 import heptapodRing from '../assets/heptapod-ring.png';
 import heptapodCompare from '../assets/heptapod-compare.png';
@@ -359,7 +362,7 @@ export const works: Work[] = [
       {
         heading: 'Next',
         body: [
-          'The vocabulary is shaped by the script format: speaker names in capitals take merges that modern text never uses, and modern words fall apart (smartphone becomes s m art p h one). Characters never seen in training stay single, where a byte-level tokenizer would merge their bytes.',
+          'The vocabulary is shaped by the script format: speaker names in capitals take merges that modern text never uses, and modern words fall apart (smartphone becomes sm art p h one). Characters never seen in training stay single, where a byte-level tokenizer would merge their bytes.',
         ],
       },
     ],
@@ -512,6 +515,57 @@ export const works: Work[] = [
         heading: 'Next',
         body: [
           'Both models are under a million parameters with 256 letters of context: they get Shakespeare’s shape, not its sense. The GPT had stopped improving by step 13,000 of 20,000 while the diffusion model was still creeping down, so equal steps are not each model at its best. Not yet checked in Safari or Firefox, or for speed on a real phone.',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'first-steps',
+    code: 'https://github.com/joezgao/first-steps',
+    demo: 'https://joezgao.github.io/first-steps/first-steps.html',
+    title: 'First steps',
+    tagline: 'A small agent learns to go round a pit and reach a light.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'Python (NumPy) · JavaScript',
+    status: 'Finished',
+    live: false,
+    loop: { src: '/loops/first-steps.mp4', poster: firstStepsPoster, label: 'Trails of a small agent on a line-drawn landscape, going round a pit to reach a glowing light as training progresses.' },
+    section: 'research',
+    question: 'How AI acts',
+    cover: {
+      src: firstStepsTrained,
+      alt: 'A line-drawn square world with an oval pit in the middle and a glowing light at the far end; several trails start near the front and curve round the right-hand side of the pit to the light. Below, a learning curve rises to 98.4%.',
+      caption: 'After 10,240 episodes: 98.4% of 1,000 test runs reach the light, in 33 steps on average.',
+    },
+    extra: {
+      src: firstStepsPit,
+      alt: 'The same world early in training: tangled trails wander up from the start area and several end with a cross inside the pit, short of the light.',
+      caption: 'Episode 64: it has learned that closer is better, so 73.8% of test runs head straight into the pit.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A small agent on a square world must reach a light, and a pit lies between where it starts and the light: every straight line from the start to the light crosses it. It is trained from scratch with REINFORCE in NumPy, and the page runs the saved policy live in JavaScript at 20 points in training. A slider swaps checkpoints, so you can watch random stumbling turn into a short route around the pit.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'REINFORCE (Williams, 1992) with a learned baseline. The policy is a 2 → 48 → 48 → 2 network with a learned Gaussian noise per axis (2,596 parameters); the critic is 2 → 48 → 48 → 1 (2,545 parameters). After every 32 tries, moves with a better-than-expected return become more likely. The backward pass, the Gaussian log-likelihood gradients and Adam are written by hand and checked against finite differences before every run (worst relative error 2.4e-7). Training runs 10,240 episodes, seed 7.',
+        ],
+      },
+      {
+        heading: 'Measured',
+        body: [
+          'Each checkpoint is evaluated on 1,000 test runs. Untrained, none reach the light and 28.9% fall in; at episode 64, 73.8% fall in; by episode 6,144, 99.6% reach the light; at the end, 98.4% reach it in 33 steps on average, and every successful run goes round the right-hand side of the pit.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'One fixed map: the policy sees only its position, so it has memorised a route for this map, not what a pit is; move the light and it would fail. It never learned to pass on the left, a local optimum REINFORCE settled into rather than a property of the task. The constants were tuned on seed 7, with a quick check of seeds 1 to 3.',
         ],
       },
     ],
