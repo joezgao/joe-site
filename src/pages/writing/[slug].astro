@@ -36,7 +36,7 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
       {essay.data.draft && <DraftMark />}
       <h1 class="display">{essay.data.title}</h1>
       {essay.data.dek && <p class="dek">{essay.data.dek}</p>}
-      <p class="label">{meta.join(' · ')}</p>
+      <p class="label meta-row">{meta.map((m) => <span>{m}</span>)}</p>
     </header>
 
     <div class="longform">
@@ -47,14 +47,14 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
       {
         work && (
           <a class="label" href={`/work#${work.id}`}>
-            The piece: {work.title} →
+            The piece: {work.title}
           </a>
         )
       }
       {
         next.id !== essay.id && (
           <a class="label" href={essayHref(next)}>
-            Next essay: {next.data.title} →
+            Next essay: {next.data.title}
           </a>
         )
       }

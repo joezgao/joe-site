@@ -72,8 +72,8 @@ export const isResearch = (w: Work) => w.section === 'research';
 
 export type SeriesWork = Work & { series: NonNullable<Work['series']> };
 export const isSeries = (w: Work): w is SeriesWork => w.series !== undefined;
-/** "I · Learns" for a trilogy work. */
-export const seriesLabel = (w: SeriesWork) => `${trilogy.numerals[w.series.part - 1]} · ${w.series.verb}`;
+/** "Part I: Learns" for a trilogy work. */
+export const seriesLabel = (w: SeriesWork) => `Part ${trilogy.numerals[w.series.part - 1]}: ${w.series.verb}`;
 
 export const works: Work[] = [
   {
@@ -84,7 +84,7 @@ export const works: Work[] = [
     tagline: 'Watch a tiny neural network learn, one gradient at a time.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'TypeScript · React Three Fiber',
+    tools: 'TypeScript, React Three Fiber',
     status: 'v1.1, live in the browser',
     live: false,
     series: { part: 1, verb: 'Learns' },
@@ -128,7 +128,7 @@ export const works: Work[] = [
     tagline: 'Watch a tiny GPT read, in 3D, while you type.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'NumPy · three.js · Web Workers',
+    tools: 'NumPy, three.js, Web Workers',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/attention.mp4', poster: attentionPoster, label: 'Golden arcs of attention rising between letters across four layers while the model reads and writes.' },
@@ -173,7 +173,7 @@ export const works: Work[] = [
     tagline: 'Watch 4,000 points of noise become a knot.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'NumPy · three.js · Web Workers',
+    tools: 'NumPy, three.js, Web Workers',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/noise-undone.mp4', poster: noisePoster, label: 'Thousands of cyan points gathering out of noise into a trefoil knot, then dissolving back into noise.' },
@@ -219,7 +219,7 @@ export const works: Work[] = [
     tagline: 'One maple leaf, from the whole leaf down to a single stoma.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'WebGL · three.js · Web Workers',
+    tools: 'WebGL, three.js, Web Workers',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/all-the-way-down.mp4', poster: atwdPoster, label: 'A zoom through an autumn maple leaf, from the whole leaf down to a single stoma between its guard cells.' },
@@ -270,7 +270,7 @@ export const works: Work[] = [
     tagline: 'Twelve photographs of a stone become 4,000 Gaussians.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'NumPy · three.js',
+    tools: 'NumPy, three.js',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/seen-from-twelve-sides.mp4', poster: twelvePoster, label: 'A grey blur of Gaussians tightening into a stone as training runs, then the cameras that photographed it appearing around it.' },
@@ -321,7 +321,7 @@ export const works: Work[] = [
     tagline: 'Watch text break into tokens, merge by merge.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'Python · JavaScript',
+    tools: 'Python, JavaScript',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/how-a-model-reads.mp4', poster: readsPoster, label: 'Text split into coloured token pills that slide together as merges are applied, with the list of merges beside it.' },
@@ -372,7 +372,7 @@ export const works: Work[] = [
     tagline: 'Three thousand Shakespeare words, placed by the company they keep.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'NumPy · three.js',
+    tools: 'NumPy, three.js',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/where-words-live.mp4', poster: wordsPoster, label: 'A cloud of word points in 3D; one word lights up with lines to its ten nearest neighbours, then another.' },
@@ -423,7 +423,7 @@ export const works: Work[] = [
     tagline: 'A dry Zen garden whose rake lines are the level lines of a field.',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'three.js · GLSL',
+    tools: 'three.js, GLSL',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/karesansui.mp4', poster: karesansuiPoster, label: 'Raked white gravel flowing around three dark stones on moss islands, being raked again stroke by stroke.' },
@@ -474,7 +474,7 @@ export const works: Work[] = [
     tagline: 'Can a language model write a whole passage at once?',
     year: '2026',
     form: 'Interactive, in the browser',
-    tools: 'PyTorch · JavaScript',
+    tools: 'PyTorch, JavaScript',
     status: 'Finished',
     live: false,
     section: 'research',
@@ -524,7 +524,7 @@ export const works: Work[] = [
     tagline: 'A night inside the Caretaker.',
     year: '2026',
     form: 'Interactive story, about three minutes',
-    tools: 'three.js · Web Audio API · Claude',
+    tools: 'three.js, Web Audio API, Claude',
     status: 'Finished',
     live: false,
     loop: { src: '/loops/almost-ripe.mp4', poster: almostRipePoster, label: 'A lone apple tree on a hill of golden grass; the world breaks into triangles and opens onto a dark corridor of blinking lights.' },

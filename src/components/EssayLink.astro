@@ -1,5 +1,5 @@
 ---
-// "Read the essay: … →" for a work that has an essay; renders nothing otherwise.
+// "Read the essay: …" for a work that has an essay; renders nothing otherwise.
 import { essayHref, type Essay } from '../data/writing';
 
 interface Props {
@@ -13,7 +13,7 @@ const { essay, compact = false } = Astro.props;
 {
   essay && (
     <a class:list={['essay-link', { label: compact }]} href={essayHref(essay)}>
-      {compact ? 'Essay' : 'Read the essay'}: {essay.data.title} →
+      {compact ? 'Essay' : 'Read the essay'}: {essay.data.title}
     </a>
   )
 }

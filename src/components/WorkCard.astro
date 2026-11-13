@@ -1,5 +1,5 @@
 ---
-// One work on Home: still, title, tagline, meta. `kicker` is the trilogy part ("I · Learns").
+// One work on Home: still, title, tagline, meta. `kicker` is the trilogy part ("Part I: Learns").
 import { Picture } from 'astro:assets';
 import LoopVideo from './LoopVideo.astro';
 import type { Work } from '../data/works';
@@ -25,9 +25,9 @@ const { work: w, kicker, widths, sizes } = Astro.props;
   {kicker && <span class="label kicker">{kicker}</span>}
   <span class="card-title">{w.title}</span>
   <span class="card-line">{w.tagline}</span>
-  <span class="label card-meta">
-    {w.live && <span class="lamp" aria-hidden="true" />}
-    {w.year} · {w.form}
+  <span class="label card-meta meta-row">
+    <span>{w.live && <span class="lamp" aria-hidden="true" />}{w.year}</span>
+    <span>{w.form}</span>
   </span>
 </a>
 
