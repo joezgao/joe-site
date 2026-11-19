@@ -1,12 +1,12 @@
 // Fast structural check of the production build in dist/. Run after `astro build`.
-// Discovers every page (dist/**/index.html) and fails on: a core page missing,
+// Discovers every page (dist/**/index.html, plus dist/404.html) and fails on: a core page missing,
 // a missing <title>/description/lang/<h1>, an <img> without real alt text, an internal link to a
 // page that does not exist, or placeholder text.
 import { readFileSync, existsSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 
 const dist = new URL('../dist/', import.meta.url).pathname;
-const required = ['/', '/work', '/about', '/now', '/writing'];
+const required = ['/', '/work', '/about', '/now', '/writing', '/404'];
 
 const pages = {};
 (function walk(dir) {
@@ -14,6 +14,7 @@ const pages = {};
     const path = join(dir, name);
     if (statSync(path).isDirectory()) walk(path);
     else if (name === 'index.html') pages['/' + relative(dist, dir)] = path;
+    else if (name === '404.html' && relative(dist, dir) === '') pages['/404'] = path;
   }
 })(dist);
 const routes = Object.keys(pages).map((r) => (r === '/' ? '/' : r.replace(/\/$/, '')));
@@ -34,6 +35,13 @@ for (const [route, path] of Object.entries(byRoute)) {
   for (const [, href] of html.matchAll(/<a\b[^>]*href="(\/[^"#?]*)/g)) {
     const target = href.replace(/\/$/, '') || '/';
     if (!routes.includes(target) && !existsSync(join(dist, href))) errors.push(`${route}: link to unknown page ${href}`);
+  }
+  // The host serves 404.html at whatever path was missed (/a/b/c), so a relative URL there breaks.
+  if (route === '/404') {
+    for (const [, url] of html.matchAll(/\s(?:href|src)="([^"]*)"/g)) {
+      if (!/^(\/|https?:|mailto:|#|data:)/.test(url)) errors.push(`/404: relative URL ${url} breaks on nested paths`);
+    }
+    if (!/<a\b[^>]*href="\/"/.test(html)) errors.push('/404: no link back to /');
   }
   if (/lorem|TODO|placeholder/i.test(html.replace(/<style[\s\S]*?<\/style>/g, ''))) errors.push(`${route}: placeholder text`);
   // Credit rule (vault 规则详解 § 作品署名): every page, and every piece on Work, says it.
