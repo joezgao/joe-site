@@ -1,26 +1,26 @@
-/* Tokens from Joe's DESIGN.md: near-black, one warm light, Geist + Geist Mono, 8px grid. */
+/* Tokens from Joe's DESIGN.md: near-black, one warm light, Inter + Geist Mono, 8px grid.
+   Body is Inter so the site matches the 10 portfolio pieces (design system §11, Joe approved 11/20). */
 
-/* Metric-matched fallback: on a slow network the first paint uses this until Geist arrives. The system font is
-   5-10% narrower than Geist, so the hero headline wrapped 2 -> 3 lines on swap and the hero jumped ~30px.
-   size-adjust makes Arial (400) and Arial Bold (600) as wide as Geist on the home page text (measured in Chrome:
-   Geist/Arial 1.025, Geist 600/Arial Bold 0.997); the overrides are Geist's ascent 101 / descent 29 per 100px,
-   divided by size-adjust because the browser scales them by it. */
+/* Metric-matched fallback: on a slow network the first paint uses Arial until Inter arrives. Without it the hero
+   headline re-wraps on swap and the page jumps. size-adjust makes Arial (400) and Arial Bold (600) as wide as
+   Inter on the home page text (measured in Chrome); the overrides are Inter's ascent 96.9 / descent 24.2 per
+   100px divided by size-adjust, because the browser scales them by it. */
 @font-face {
-  font-family: 'Geist Fallback';
+  font-family: 'Inter Fallback';
   font-weight: 100 500;
   src: local('Arial'), local('ArialMT');
-  size-adjust: 102.5%;
-  ascent-override: 98.5%;
-  descent-override: 28.3%;
+  size-adjust: 106.8%;
+  ascent-override: 90.7%;
+  descent-override: 22.7%;
   line-gap-override: 0%;
 }
 @font-face {
-  font-family: 'Geist Fallback';
+  font-family: 'Inter Fallback';
   font-weight: 501 900;
   src: local('Arial Bold'), local('Arial-BoldMT');
-  size-adjust: 99.7%;
-  ascent-override: 101.3%;
-  descent-override: 29.1%;
+  size-adjust: 100.9%;
+  ascent-override: 96%;
+  descent-override: 24%;
   line-gap-override: 0%;
 }
 
@@ -34,7 +34,7 @@
   --accent: #f5b46a;
   --still-rest: brightness(0.8) saturate(0.8);
 
-  --sans: 'Geist Variable', 'Geist Fallback', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --sans: 'Inter Variable', 'Inter Fallback', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, monospace;
 
   --gutter: clamp(20px, 5vw, 64px);
