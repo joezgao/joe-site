@@ -4,6 +4,8 @@
 
 Joe Gao's personal site: the work, how each piece was made, and short essays on what building them taught me. Static [Astro](https://astro.build), no client-side framework, dark and light themes.
 
+Live at **https://joezgao.github.io**.
+
 ## Run it
 
 Requires Node 22.23.4 or newer.
