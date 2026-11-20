@@ -67,7 +67,7 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
     /* One column width for header, body and footer: 600px ≈ 65 characters a line at 20px Geist (measured). */
     --col: 600px;
     display: grid;
-    gap: 56px;
+    gap: 48px;
     padding-block: 48px 0;
   }
   .essay > * {
@@ -125,7 +125,7 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
     font-family: var(--mono);
     font-size: 0.85em;
     padding: 0.1em 0.35em;
-    border-radius: 4px;
+    border-radius: 0;
     background: var(--surface);
   }
   .longform :global(blockquote) {
@@ -150,7 +150,7 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
   }
   .longform :global(th),
   .longform :global(td) {
-    padding: 10px 12px 10px 0;
+    padding: 8px 12px 8px 0;
     text-align: left;
     border-bottom: 1px solid var(--line);
   }
@@ -178,7 +178,7 @@ const meta = [work && isSeries(work) ? seriesLabel(work) : undefined, `${reading
   @media (max-width: 480px) {
     .essay {
       padding-block: 24px 0;
-      gap: 40px;
+      gap: 32px;
     }
     .longform {
       font-size: 18px;

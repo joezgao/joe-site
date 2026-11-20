@@ -44,7 +44,7 @@ const { work: w, kicker, widths, sizes } = Astro.props;
     height: auto; /* <video height="720"> would otherwise fix the height and ignore aspect-ratio */
     aspect-ratio: var(--still-ratio, 16 / 9); /* the loops are 16:9 with titles near the edges: never crop them */
     object-fit: cover;
-    border-radius: 4px;
+    border-radius: 0;
     background: var(--surface);
     outline: 1px solid var(--line);
     outline-offset: -1px;

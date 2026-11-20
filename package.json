@@ -11,7 +11,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "typecheck": "astro check",
-    "test": "astro build --silent && node scripts/check-site.mjs",
+    "test": "node scripts/check-tokens.mjs && astro build --silent && node scripts/check-site.mjs",
     "astro": "astro"
   },
   "dependencies": {
