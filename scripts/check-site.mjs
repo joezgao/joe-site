@@ -53,6 +53,18 @@ for (const [route, path] of Object.entries(byRoute)) {
   }
 }
 
+// A public build has no draft essays (src/content/writing/*.md is gitignored), so /writing is empty there.
+// An empty page must not be linked or indexed: visitors would land on a heading with nothing under it.
+if (byRoute['/writing']) {
+  const writing = readFileSync(byRoute['/writing'], 'utf8');
+  if (!/class="item-title"/.test(writing)) {
+    if (!/<meta name="robots" content="noindex/.test(writing)) errors.push('/writing: empty but indexable');
+    for (const [route, path] of Object.entries(byRoute)) {
+      if (/<a\b[^>]*href="\/writing\/?"/.test(readFileSync(path, 'utf8'))) errors.push(`${route}: links to the empty /writing`);
+    }
+  }
+}
+
 if (errors.length) {
   console.error(errors.join('\n'));
   process.exit(1);
