@@ -43,6 +43,8 @@ import firstStepsPit from '../assets/first-steps-pit.png';
 import karesansuiGhost from '../assets/karesansui-ghost.png';
 import heptapodRing from '../assets/heptapod-ring.png';
 import heptapodCompare from '../assets/heptapod-compare.png';
+import machinaTower from '../assets/machina-tower.png';
+import machinaReaching from '../assets/machina-reaching.png';
 
 export interface Work {
   id: string;
@@ -608,6 +610,48 @@ export const works: Work[] = [
       {
         heading: 'Next',
         body: ['Finished after two polish rounds on the tree, the grass and the shatter.'],
+      },
+    ],
+  },
+  {
+    id: 'machina',
+    code: 'https://github.com/joezgao/machina',
+    demo: 'https://joezgao.github.io/machina/machina.html',
+    title: 'Machina',
+    tagline: 'A tower in the fog with one red eye that notices you.',
+    year: '2026',
+    form: 'Interactive, in the browser',
+    tools: 'three.js, GLSL',
+    status: 'v1',
+    live: false,
+    cover: {
+      src: machinaTower,
+      alt: 'A black tower in stippled fog under a white moon, a wide ring of gears above it and one red eye open on its face.',
+      caption: 'Typing: every key turns each ring of gears by one tooth.',
+    },
+    extra: {
+      src: machinaReaching,
+      alt: 'The same tower after the visitor went still: the gear cloud has come down and closed around the top of the tower.',
+      caption: 'Hold still and it reaches: the cloud comes down around the tower.',
+    },
+    sections: [
+      {
+        heading: 'What',
+        body: [
+          'A dark tower stands in fog under the moon, with a cloud of gears turning above it and one closed eye. Move and the eye opens and follows you. Hold still after it has seen you and the gear cloud comes down and closes around the tower. Type and every ring turns by exactly one tooth while a circuit trace lights from the tower outward. Keep watching and the tower grows, one segment every forty seconds. Leave the tab and it closes its eye.',
+        ],
+      },
+      {
+        heading: 'How',
+        body: [
+          'One HTML file with three.js. The scene renders offscreen, then a shader turns it into 1-bit art: brightness against a 4 by 4 ordered dither, in cells of two pixels. The eye is drawn pure red, and the shader keeps red pixels as the one colour on the page, dithered the same way. What the machine does is driven by three numbers: attention (built by movement and keys, fading slowly), stillness, and how long its eye has been open.',
+        ],
+      },
+      {
+        heading: 'Next',
+        body: [
+          'This is the first version. The gears read best on a large screen; on a phone the cloud is a little busy. Next: a slower, heavier feel to the reach, and a reason to come back to a taller tower.',
+        ],
       },
     ],
   },
