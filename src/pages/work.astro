@@ -22,6 +22,11 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
   <header class="wrap page-head">
     <h1 class="display">Work</h1>
     <p class="lead">{lead} {trilogyLine}</p>
+    <nav class="index" aria-label="Pieces on this page">
+      <ol>
+        {works.map((w) => <li><a href={`#${w.id}`}>{w.title}</a></li>)}
+      </ol>
+    </nav>
   </header>
 
   {
@@ -100,6 +105,28 @@ const trilogyLine = seriesCount === 3 ? `The first three are a trilogy: ${trilog
     display: grid;
     gap: 16px;
     padding-block: 64px 96px;
+  }
+  /* a quiet table of contents: every piece one tap away on a long page */
+  .index ol {
+    list-style: none;
+    margin: 16px 0 0;
+    padding: 0;
+    columns: 3 200px;
+    column-gap: 32px;
+  }
+  .index li {
+    break-inside: avoid;
+  }
+  .index a {
+    display: inline-block;
+    padding-block: 8px;
+    line-height: 28px;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .index a:hover,
+  .index a:focus-visible {
+    color: var(--text);
   }
   .case {
     display: grid;
